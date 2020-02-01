@@ -45,7 +45,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TerrainTileset: {fileID: 0}
   ObjectTileset: {fileID: 0}
-  landSpeed: 2
+  TerrainLayers: {fileID: 4126827122018522674, guid: a80c57b22a3447b4990d647942bda9fc,
+    type: 3}
+  landSpeed: 0.8
   GrassTile: {fileID: 11400000, guid: 21ee9c18177d6ef4b87103539131a6bf, type: 2}
   RoadTile: {fileID: 11400000, guid: 63008592a37b0ad419a1efdbdef1be15, type: 2}
   TrackTile: {fileID: 11400000, guid: 8440e37de764723489cf68471b3aae4b, type: 2}
@@ -54,3 +56,4 @@ MonoBehaviour:
   SnowTile: {fileID: 11400000, guid: 2a36e9378377ff2469fe8359558ab64a, type: 2}
   BushTile: {fileID: 11400000, guid: 8d9f88c0f2a401042b1e5eea1a7b663a, type: 2}
   tgen: {fileID: 6709488267595049215, guid: 28d32c766d14fb047aca4dbde8bec373, type: 3}
+  cgen: {fileID: 6657644471938009379, guid: 0cd4672b4e3560f4cb06d2c0308d3d8f, type: 3}

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrainGenController : MonoBehaviour
+public class CarGenController : MonoBehaviour
 {
     public int cooldown = 100;
-    public TrainController trainPrefab;
+    public CarController carPrefab;
     public GameObject parentObj;
     public GameController parent;
     public int direction;
@@ -15,15 +15,14 @@ public class TrainGenController : MonoBehaviour
         //parent = parentObj.GetComponent<GameController>();
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         transform.position += new Vector3(-1 * parent.landSpeed * Time.deltaTime, 0, 0);
         if(cooldown <= 0){
-            TrainController tc = Instantiate(trainPrefab, transform.position, Quaternion.identity);
+            CarController tc = Instantiate(carPrefab, transform.position, Quaternion.identity);
             tc.parent = parent;
             tc.direction = direction;
-            cooldown = 210 - Random.Range(0, 70);
+            cooldown = 100 - Random.Range(0, 30);
         }
         cooldown -= 1;
 

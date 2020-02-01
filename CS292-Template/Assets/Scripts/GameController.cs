@@ -6,7 +6,9 @@ public class GameController : MonoBehaviour
 {
     public GameObject TerrainTileset;
     public GameObject ObjectTileset;
-    public int landSpeed;
+
+    public GameObject TerrainLayers;
+    public float landSpeed;
 
     float offset; //How far has camera(terrain) moved
     int front = 13; //Used for determine new layer placement
@@ -23,6 +25,7 @@ public class GameController : MonoBehaviour
     public Tile BushTile;
     int genState; //Used for markov chains
     public TrainGenController tgen;
+    public CarGenController cgen;
     Dictionary<int,List<int>> T; //Terrain Array
     //-1 = Out of Bounds
     //0 = Passable
@@ -39,6 +42,12 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
+        GameObject tlayers = Instantiate(TerrainLayers, new Vector3(0.3657658f,0.9327229f,0), Quaternion.identity).gameObject;
+
+        TerrainTileset = tlayers.transform.Find("TerrainGrid/TerrainMap").gameObject;
+        ObjectTileset = tlayers.transform.Find("ObjectGrid/ObjectMap").gameObject;
+
+
         terrain = TerrainTileset.GetComponent<Tilemap>();
         objects = ObjectTileset.GetComponent<Tilemap>();
 
@@ -65,12 +74,16 @@ public class GameController : MonoBehaviour
         T[11][2] = 1;
     }
 
-    void FixedUpdate()
-    {
+    void Update(){
         TerrainTileset.transform.position = TerrainTileset.transform.position + new Vector3(-1 * landSpeed * Time.deltaTime, 0, 0);
         ObjectTileset.transform.position = TerrainTileset.transform.position;
+    }
+    void FixedUpdate()
+    {
+        landSpeed += (1 / (float)(front + 200)) / 20; //Acceleration Function integrates to Log
+
         offset += landSpeed * Time.deltaTime;
-        if(offset + 13 > front){
+        if(offset + 24 > front){
             MakeNewLayer();
         }
     }
@@ -81,12 +94,12 @@ public class GameController : MonoBehaviour
         for(int i = 0; i < 7; i += 1){
             L.Add(0);
         }
-        T.Remove(front - 14);
+        T.Remove(front - 25);
         T.Add(front, L);
 
         for(int i = bot; i < top; i+=1){
-            terrain.SetTile(new Vector3Int(front - 14, i, 0), null);
-            objects.SetTile(new Vector3Int(front - 14, i, 0), null);
+            terrain.SetTile(new Vector3Int(front - 25, i, 0), null);
+            objects.SetTile(new Vector3Int(front - 25, i, 0), null);
             
         }
 
@@ -110,15 +123,36 @@ public class GameController : MonoBehaviour
         for(int i = bot; i < top; i+=1){
             terrain.SetTile(new Vector3Int(front, i, 0), RoadTile);
         }
+        int r = Random.Range(0, 2);
+        if(r == 0){
+            CarGenController tg = Instantiate(cgen, new Vector3(front - offset, -3, 0), Quaternion.identity);
+            tg.direction = 1;
+            tg.parent = this;
+        }else{
+            CarGenController tg = Instantiate(cgen, new Vector3(front - offset, 12, 0), Quaternion.identity);
+            tg.direction = -1;
+            tg.parent = this;
+        }
         front += 1;
     }
 
     void MakeTracks(){
-        TrainGenController tg = Instantiate(tgen, new Vector3(front - offset, 9, 0), Quaternion.identity);
-        tg.parent = this;
         for(int i = bot; i < top; i+=1){
             objects.SetTile(new Vector3Int(front, i, 0), TrackTile);
         }
+
+        int r = Random.Range(0, 2);
+        if(r == 0){
+            TrainGenController tg = Instantiate(tgen, new Vector3(front - offset, -3, 0), Quaternion.identity);
+            tg.direction = 1;
+            tg.parent = this;
+        }else{
+            TrainGenController tg = Instantiate(tgen, new Vector3(front - offset, 12, 0), Quaternion.identity);
+            tg.direction = -1;
+            tg.parent = this;
+        }
+        
+        
         MakePassable();
         front += 1;
     }
@@ -148,3 +182,5 @@ public class GameController : MonoBehaviour
         front += 1;
     }
 }
+
+

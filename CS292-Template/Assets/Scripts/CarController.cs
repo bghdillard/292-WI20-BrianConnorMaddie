@@ -2,20 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrainController : MonoBehaviour
+public class CarController : MonoBehaviour
 {
     public float speed = 3;
     public int direction = -1;
 
     public GameObject parentObj;
     public GameController parent;
-    // Start is called before the first frame update
     void Start()
     {
-        //parent = parentObj.GetComponent<GameController>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         transform.position += new Vector3(-1 * parent.landSpeed * Time.deltaTime, 0, 0);
