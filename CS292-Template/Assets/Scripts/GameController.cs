@@ -22,6 +22,7 @@ public class GameController : MonoBehaviour
     public Tile SnowTile;
     public Tile BushTile;
     int genState; //Used for markov chains
+    public TrainGenController tgen;
     Dictionary<int,List<int>> T; //Terrain Array
     //-1 = Out of Bounds
     //0 = Passable
@@ -113,8 +114,10 @@ public class GameController : MonoBehaviour
     }
 
     void MakeTracks(){
+        TrainGenController tg = Instantiate(tgen, new Vector3(front - offset, 9, 0), Quaternion.identity);
+        tg.parent = this;
         for(int i = bot; i < top; i+=1){
-            terrain.SetTile(new Vector3Int(front, i, 0), TrackTile);
+            objects.SetTile(new Vector3Int(front, i, 0), TrackTile);
         }
         MakePassable();
         front += 1;

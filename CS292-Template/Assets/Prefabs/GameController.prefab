@@ -53,3 +53,4 @@ MonoBehaviour:
   IceTile: {fileID: 11400000, guid: d561052486b047e498b01774f7dd207d, type: 2}
   SnowTile: {fileID: 11400000, guid: 2a36e9378377ff2469fe8359558ab64a, type: 2}
   BushTile: {fileID: 11400000, guid: 8d9f88c0f2a401042b1e5eea1a7b663a, type: 2}
+  tgen: {fileID: 6709488267595049215, guid: 28d32c766d14fb047aca4dbde8bec373, type: 3}
