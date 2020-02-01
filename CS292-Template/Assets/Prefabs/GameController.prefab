@@ -43,7 +43,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c3e87bef14baa4790b30a7443ca1ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TileSet: {fileID: 0}
+  TerrainTileset: {fileID: 0}
+  ObjectTileset: {fileID: 0}
   landSpeed: 2
-  GrassTile: {fileID: 11400000, guid: 525c1cb4320529149980d8dd715ae9eb, type: 2}
-  RoadTile: {fileID: 11400000, guid: b450c8199fc6cbc40ba773584609cc17, type: 2}
+  GrassTile: {fileID: 11400000, guid: 21ee9c18177d6ef4b87103539131a6bf, type: 2}
+  RoadTile: {fileID: 11400000, guid: 63008592a37b0ad419a1efdbdef1be15, type: 2}
+  TrackTile: {fileID: 11400000, guid: 8440e37de764723489cf68471b3aae4b, type: 2}
+  RockTile: {fileID: 11400000, guid: 26ad99b805fc2b34fb58ee9c3041ea5b, type: 2}
+  IceTile: {fileID: 11400000, guid: d561052486b047e498b01774f7dd207d, type: 2}
+  SnowTile: {fileID: 11400000, guid: 2a36e9378377ff2469fe8359558ab64a, type: 2}
+  BushTile: {fileID: 11400000, guid: 8d9f88c0f2a401042b1e5eea1a7b663a, type: 2}
