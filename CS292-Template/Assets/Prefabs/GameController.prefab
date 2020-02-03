@@ -48,6 +48,8 @@ MonoBehaviour:
   TerrainLayers: {fileID: 4126827122018522674, guid: a80c57b22a3447b4990d647942bda9fc,
     type: 3}
   landSpeed: 0.8
+  Squirrel: {fileID: 9079002216964490105, guid: b89e186b732b2dc44a66e634cf35fa75,
+    type: 3}
   GrassTile: {fileID: 11400000, guid: 21ee9c18177d6ef4b87103539131a6bf, type: 2}
   RoadTile: {fileID: 11400000, guid: 63008592a37b0ad419a1efdbdef1be15, type: 2}
   TrackTile: {fileID: 11400000, guid: 8440e37de764723489cf68471b3aae4b, type: 2}

@@ -10,7 +10,9 @@ public class GameController : MonoBehaviour
     public GameObject TerrainLayers;
     public float landSpeed;
 
-    float offset; //How far has camera(terrain) moved
+    public GameObject Squirrel;
+
+    public float offset; //How far has camera(terrain) moved
     int front = 13; //Used for determine new layer placement
     int bot = -1;
     int top = 8;
@@ -43,6 +45,7 @@ public class GameController : MonoBehaviour
     void Start()
     {
         GameObject tlayers = Instantiate(TerrainLayers, new Vector3(0.3657658f,0.9327229f,0), Quaternion.identity).gameObject;
+        GameObject squirrel = Instantiate(Squirrel, new Vector3(3, 3, 0), Quaternion.identity).gameObject;
 
         TerrainTileset = tlayers.transform.Find("TerrainGrid/TerrainMap").gameObject;
         ObjectTileset = tlayers.transform.Find("ObjectGrid/ObjectMap").gameObject;
