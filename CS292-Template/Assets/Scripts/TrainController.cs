@@ -15,6 +15,14 @@ public class TrainController : MonoBehaviour
         //parent = parentObj.GetComponent<GameController>();
     }
 
+    public void SetFlip()
+    {
+        if(direction == -1){
+            gameObject.GetComponent<SpriteRenderer>().flipY = true;
+            //transform.localScale.x *= 1;
+            //gameObject.transform.Rotate(0, 180, 0);;
+        }
+    }
     // Update is called once per frame
     void Update()
     {

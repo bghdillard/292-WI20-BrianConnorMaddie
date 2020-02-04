@@ -44,8 +44,8 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        GameObject tlayers = Instantiate(TerrainLayers, new Vector3(0.3657658f,0.9327229f,0), Quaternion.identity).gameObject;
-        GameObject squirrel = Instantiate(Squirrel, new Vector3(3, 3, 0), Quaternion.identity).gameObject;
+        GameObject tlayers = Instantiate(TerrainLayers, new Vector3(0.3f, 0, 0), Quaternion.identity).gameObject;
+        GameObject squirrel = Instantiate(Squirrel, new Vector3(0, 0, 0), Quaternion.identity).gameObject;
 
         TerrainTileset = tlayers.transform.Find("TerrainGrid/TerrainMap").gameObject;
         ObjectTileset = tlayers.transform.Find("ObjectGrid/ObjectMap").gameObject;
@@ -64,17 +64,20 @@ public class GameController : MonoBehaviour
             T.Add(i, L);
         }
         //Based on starting tiles
-        T[0][4] = 1;
-        T[1][1] = 1;
+        T[1][2] = 1;
         T[2][5] = 1;
-        T[3][6] = 1;
-        T[3][0] = 1;
-        T[4][1] = 1;
-        T[6][0] = 1;
-        T[7][5] = 1;
-        T[9][6] = 1;
-        T[10][1] = 1;
-        T[11][2] = 1;
+        T[3][1] = 1;
+        T[4][6] = 1;
+        T[4][0] = 1;
+        T[5][5] = 1;
+        T[7][6] = 1;
+        T[8][1] = 1;
+        T[10][0] = 1;
+        T[11][5] = 1;
+        T[12][4] = 1;
+        
+        terrain.SetTile(new Vector3Int(0, 0, 0), IceTile);
+        terrain.SetTile(new Vector3Int(3, 3, 0), IceTile);
     }
 
     void Update(){

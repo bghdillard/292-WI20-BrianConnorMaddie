@@ -23,6 +23,7 @@ public class TrainGenController : MonoBehaviour
             TrainController tc = Instantiate(trainPrefab, transform.position, Quaternion.identity);
             tc.parent = parent;
             tc.direction = direction;
+            tc.SetFlip();
             cooldown = 210 - Random.Range(0, 70);
         }
         cooldown -= 1;
