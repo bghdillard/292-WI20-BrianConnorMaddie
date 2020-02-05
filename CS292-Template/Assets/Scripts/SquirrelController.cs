@@ -44,23 +44,6 @@ public class SquirrelController : MonoBehaviour
             newRow -= 1;
         }
 
-        if(newRow != row || newCol != col){
-        //   for(int i = newCol - 2; i < newCol + 3; i += 1){
-        //       string s = "";
-        //       for(int j = newRow - 2; j < newRow + 3; j += 1){
-        //           s += " " + GC.GetTerrain(newRow + j, newCol + i).ToString();
-        //       }
-        //       print(s);
-        //   }
-        string s = "";
-        for(int j = 0; j < 7; j += 1){
-            s += " " + GC.GetTerrain(j, newCol).ToString();
-        }
-        print(s);
-        }
-        
-        //print(GC.GetTerrain(0, 3));
-        
         if(GC.GetTerrain(newRow, newCol) == 0)
         {
             row = newRow;
