@@ -76,8 +76,8 @@ public class GameController : MonoBehaviour
         T[11][5] = 1;
         T[12][4] = 1;
         
-        terrain.SetTile(new Vector3Int(0, 0, 0), IceTile);
-        terrain.SetTile(new Vector3Int(3, 3, 0), IceTile);
+        //terrain.SetTile(new Vector3Int(0, 0, 0), IceTile);
+        //terrain.SetTile(new Vector3Int(3, 3, 0), IceTile);
     }
 
     void Update(){
