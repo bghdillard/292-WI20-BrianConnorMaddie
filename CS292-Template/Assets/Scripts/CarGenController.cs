@@ -22,6 +22,7 @@ public class CarGenController : MonoBehaviour
             CarController tc = Instantiate(carPrefab, transform.position, Quaternion.identity);
             tc.parent = parent;
             tc.direction = direction;
+            tc.SetFlip();
             cooldown = 100 - Random.Range(0, 30);
         }
         cooldown -= 1;

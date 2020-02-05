@@ -377,9 +377,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8782b0206a6cd03489937c8f36e0072b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title: {fileID: 0}
-  settings: {fileID: 0}
-  credits: {fileID: 0}
+  title: {fileID: 8040227195393441075, guid: 2c6f2aef4c351f34cba003f2c0a57ac3, type: 3}
+  settings: {fileID: 6114006442111936349, guid: fd4876a920ec2644db5c5676e2f355e8,
+    type: 3}
+  credits: {fileID: 6514245632519580588, guid: 1a24d3d4ec1b6ba41b44776e5f05cb72, type: 3}
   gameUI: {fileID: 7941421076273897912}
 --- !u!1 &7941421076596928407
 GameObject:

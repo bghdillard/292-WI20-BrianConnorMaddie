@@ -175,11 +175,11 @@ public class GameController : MonoBehaviour
     }
     void MakeRocks(){
         for(int i = 0; i < 7; i+=1){
-            int r2 = Random.Range(0, 7);
-            if(r2 % 7 == 0){
+            int r2 = Random.Range(0, 10);
+            if(r2 == 0){
                 objects.SetTile(new Vector3Int(front, i, 0), BushTile);
                 T[front][i] = 1;
-            } else if(r2 % 7 == 1){
+            } else if(r2 == 1){
                 T[front][i] = 1;
                 objects.SetTile(new Vector3Int(front, i, 0), RockTile);
             }    

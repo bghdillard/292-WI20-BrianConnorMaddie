@@ -13,6 +13,16 @@ public class CarController : MonoBehaviour
     {
     }
 
+    public void SetFlip()
+    {
+        if (direction == -1)
+        {
+            gameObject.GetComponent<SpriteRenderer>().flipY = true;
+            //transform.localScale.x *= 1;
+            //gameObject.transform.Rotate(0, 180, 0);;
+        }
+    }
+
     void Update()
     {
         transform.position += new Vector3(-1 * parent.landSpeed * Time.deltaTime, 0, 0);

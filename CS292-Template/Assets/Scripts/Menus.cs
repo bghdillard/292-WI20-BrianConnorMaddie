@@ -5,7 +5,7 @@ using UnityEngine;
 public class Menus : MonoBehaviour
 {
 
-    public GameObject title, settings, credits, gameUI;
+    public GameObject title, settings, credits, gameUI, gameplay;
 
 
     void Start()
@@ -22,13 +22,16 @@ public class Menus : MonoBehaviour
         title.SetActive(false);
         settings.SetActive(false);
         credits.SetActive(false);
+        gameplay.SetActive(true);
         gameUI.SetActive(true);
+
     }
 
     void titleScreen() {
         title.SetActive(true);
         settings.SetActive(false);
         credits.SetActive(false);
+        gameplay.SetActive(false);
         gameUI.SetActive(false);
     }
 
@@ -36,6 +39,7 @@ public class Menus : MonoBehaviour
         title.SetActive(false);
         settings.SetActive(true);
         credits.SetActive(false);
+        gameplay.SetActive(false);
         gameUI.SetActive(false);
 
     }
@@ -44,7 +48,9 @@ public class Menus : MonoBehaviour
         title.SetActive(false);
         settings.SetActive(false);
         credits.SetActive(true);
+        gameplay.SetActive(false);
         gameUI.SetActive(false);
     }
+
 
 }
