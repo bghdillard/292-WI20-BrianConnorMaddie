@@ -9,6 +9,7 @@ public class SquirrelController : MonoBehaviour
     GameController GC;
     int row;
     int col;
+    int health;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +18,7 @@ public class SquirrelController : MonoBehaviour
         GC = Controller.GetComponent<GameController>();
         row = 3;
         col = 3;
+        health = 3;
     }
 
     // Update is called once per frame
@@ -66,5 +68,20 @@ public class SquirrelController : MonoBehaviour
         }
 
         transform.position = new Vector3(col - GC.offset, row, 0);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        ChangeHealth(-1);
+    }
+
+    private void ChangeHealth(int change)
+    {
+        health += change;
+        print(health);
+        if(health == 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }
