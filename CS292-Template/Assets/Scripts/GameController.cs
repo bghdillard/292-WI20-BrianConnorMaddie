@@ -109,20 +109,22 @@ public class GameController : MonoBehaviour
             
         }
 
-        int r = Random.Range(0, 3);
-
-        if(r + genState > 2){
-            int r2 = Random.Range(0, 2);
-            if(r2 == 0){
+        MakePassable();
+        int r = Random.Range(0, 84);
+        if(genState == 0 || genState == 10){ //End of Passable
+            if(r % 2 == 0){
                 MakeRoad();
             }else{
                 MakeTracks();
             }
-            genState = 0;
-        }else{
+            genState = WeightedChoice(new int[]{1, 2, 3, 11, 12, 13}, new float[]{1, 1, 1, 1, 1, 1});
+        } else if(genState == 3 || genState == 2 || genState == 1){ //More Passable
             MakeRocks();
-            genState += 1;
-        } 
+            genState -= 1;
+        }else if(genState == 13 || genState == 12 || genState == 11){ //More Ice Field
+            MakeIceField();
+            genState -= 1;
+        }
     }
 
     void MakeRoad(){
@@ -173,6 +175,7 @@ public class GameController : MonoBehaviour
             terrain.SetTile(new Vector3Int(front, i, 0), GrassTile);
         }
     }
+
     void MakeRocks(){
         for(int i = 0; i < 7; i+=1){
             int r2 = Random.Range(0, 10);
@@ -186,6 +189,37 @@ public class GameController : MonoBehaviour
         }
         MakePassable();
         front += 1;
+    }
+
+    void MakeIceField(){
+        for(int i = 0; i < 7; i+=1){
+            int r2 = Random.Range(0, 10);
+            if(r2 == 0){
+                objects.SetTile(new Vector3Int(front, i, 0), RockTile);
+                T[front][i] = 1;
+            } else if(r2 < 3){
+                T[front][i] = 2;
+                objects.SetTile(new Vector3Int(front, i, 0), IceTile);
+            }    
+        }
+        MakePassable();
+        front += 1;
+    }
+
+    private int WeightedChoice(int[] choices, float[] weights){
+        float sum= 0;
+        for(int i = 0; i < weights.Length; i++){
+            sum += weights[i];
+        }
+
+        float r = Random.Range(0, sum);
+        int j = 0;
+        r -= weights[j];
+        while(r > 0){
+            j += 1;
+            r -= weights[j]; 
+        }
+        return choices[j];
     }
 }
 
