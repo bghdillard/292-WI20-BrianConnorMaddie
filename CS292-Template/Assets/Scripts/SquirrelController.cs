@@ -8,10 +8,14 @@ public class SquirrelController : MonoBehaviour
     GameObject Controller;
     GameController GC;
     Animator anim;
-    int row;
-    int col;
-    int health;
+    public GameObject squirrel;
+
+    int front = 13;
+    public int row;
+    public int col;
+    public int health;
     bool dead;
+
     Rigidbody2D body;
 
     // Start is called before the first frame update
@@ -20,9 +24,6 @@ public class SquirrelController : MonoBehaviour
         Controller = GameObject.Find("GameController");
         GC = Controller.GetComponent<GameController>();
         anim = GetComponent<Animator>();
-        row = 3;
-        col = 3;
-        health = 3;
         dead = false;
         body = GetComponent<Rigidbody2D>();
     }
@@ -32,6 +33,10 @@ public class SquirrelController : MonoBehaviour
     {
         if (!dead)
         {
+            if (GC.GetTerrain(row,col) == -1)
+            {
+                offScreen();
+            }
             int newRow = row;
             int newCol = col;
             bool moveL = false;
@@ -90,7 +95,7 @@ public class SquirrelController : MonoBehaviour
         ChangeHealth(-1);
     }
 
-    private void ChangeHealth(int change)
+    public void ChangeHealth(int change)
     {
         health += change;
         print(health);
@@ -99,5 +104,26 @@ public class SquirrelController : MonoBehaviour
             anim.SetTrigger("IsDead");
             dead = true;
         }
+    }
+
+    private void offScreen()
+    {
+        int i = 3;
+        while (true)
+        {
+            if (GC.GetTerrain(row, col + i) == 0 || GC.GetTerrain(row, col + i) == 2)
+            {
+                break;
+            }
+            i++;
+        }
+        GameObject other = Instantiate(squirrel, new Vector3(transform.position.x + i,
+            transform.position.y, 0), Quaternion.identity).gameObject;
+        SquirrelController s = other.GetComponent<SquirrelController>();
+        s.col = col + i;
+        s.row = row;
+        s.health = health;
+        //s.ChangeHealth(-1);
+        Destroy(gameObject);
     }
 }
