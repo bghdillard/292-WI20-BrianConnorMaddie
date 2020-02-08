@@ -91,7 +91,7 @@ public class GameController : MonoBehaviour
     {
         if(running){
             //landSpeed += Time.deltaTime / 10;
-            landSpeed += 1 * ((1 / (float)(front + 10)) * Time.deltaTime); //Acceleration Function integrates to Log
+            landSpeed += ((1 / (float)(front + 20)) * Time.deltaTime); //Acceleration Function integrates to Log
 
             offset += landSpeed * Time.deltaTime;
             if(offset + 24 > front){

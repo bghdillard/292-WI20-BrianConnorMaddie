@@ -5,10 +5,10 @@ using UnityEngine;
 public class CarGenController : MonoBehaviour
 {
     public int cooldown = 100;
-    public CarController carPrefab;
-    public GameObject parentObj;
+    
     public GameController parent;
     public int direction;
+    public CarController carPrefab;
     void Start()
     {
         cooldown = Random.Range(0, 70);

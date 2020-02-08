@@ -98,6 +98,9 @@ MonoBehaviour:
   direction: -1
   parentObj: {fileID: 0}
   parent: {fileID: 0}
+  sprites:
+  - {fileID: 21300000, guid: c09a3334c5d2e0a4a885200b0f792887, type: 3}
+  - {fileID: 21300000, guid: 001ac727ae7fd3e45a621bcf2f1ca1e9, type: 3}
 --- !u!61 &-6751416830104326378
 BoxCollider2D:
   m_ObjectHideFlags: 0

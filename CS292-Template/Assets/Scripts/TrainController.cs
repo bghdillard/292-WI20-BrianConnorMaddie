@@ -9,9 +9,12 @@ public class TrainController : MonoBehaviour
 
     public GameObject parentObj;
     public GameController parent;
+    public List<Sprite> sprites;
     // Start is called before the first frame update
     void Start()
     {
+        Sprite newSprite = rc(sprites);
+        gameObject.GetComponent<SpriteRenderer>().sprite = newSprite;
         //parent = parentObj.GetComponent<GameController>();
     }
 
@@ -38,5 +41,9 @@ public class TrainController : MonoBehaviour
         if(transform.position.y > 12){
             Destroy(gameObject);
         }
+    }
+
+    private Sprite rc(List<Sprite> choices){
+        return choices[Random.Range(0, choices.Count)];
     }
 }

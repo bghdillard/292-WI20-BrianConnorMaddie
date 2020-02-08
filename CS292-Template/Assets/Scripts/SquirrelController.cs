@@ -10,7 +10,6 @@ public class SquirrelController : MonoBehaviour
     Animator anim;
     public GameObject squirrel;
 
-    int front = 13;
     public int row;
     public int col;
     public int health;
