@@ -49,7 +49,7 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        GameObject tlayers = Instantiate(TerrainLayers, new Vector3(0.3f, 0, 0), Quaternion.identity).gameObject;
+        GameObject tlayers = Instantiate(TerrainLayers, new Vector3(0, 0, 0), Quaternion.identity).gameObject;
         GameObject squirrel = Instantiate(Squirrel, new Vector3(0, 0, 0), Quaternion.identity).gameObject;
 
         TerrainTileset = tlayers.transform.Find("TerrainGrid/TerrainMap").gameObject;
@@ -83,7 +83,7 @@ public class GameController : MonoBehaviour
 
     void Update(){
         if(running){
-            TerrainTileset.transform.position = TerrainTileset.transform.position + new Vector3(-1 * landSpeed * Time.deltaTime, 0, 0);
+            TerrainTileset.transform.position = new Vector3(-1 * offset - 0.5f, TerrainTileset.transform.position.y, 0);// = TerrainTileset.transform.position + new Vector3(-1 * landSpeed * Time.deltaTime, 0, 0);
             ObjectTileset.transform.position = TerrainTileset.transform.position;
         }
     }
@@ -264,7 +264,7 @@ public class GameController : MonoBehaviour
                 T[front][i] = '-';
             }else if(patches.Contains(i)){
                 T[front][i] = '=';
-                objects.SetTile(new Vector3Int(front, i, 0), IceTile);
+                terrain.SetTile(new Vector3Int(front, i, 0), IceTile);
             }else{
                 T[front][i] = '#';
                 objects.SetTile(new Vector3Int(front, i, 0), RockTile);

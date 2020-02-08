@@ -13,6 +13,8 @@ public class SquirrelController : MonoBehaviour
     public int row;
     public int col;
     public int health;
+    public AudioSource audioSource;
+    public AudioClip bump;
     bool dead;
 
     Rigidbody2D body;
@@ -22,6 +24,7 @@ public class SquirrelController : MonoBehaviour
     {
         Controller = GameObject.Find("GameController");
         GC = Controller.GetComponent<GameController>();
+        audioSource = gameObject.GetComponent<AudioSource>();
         anim = GetComponent<Animator>();
         dead = false;
         body = GetComponent<Rigidbody2D>();
@@ -85,7 +88,11 @@ public class SquirrelController : MonoBehaviour
                 {
                     anim.SetTrigger("MoveDown");
                 }
+            }else{
+                print("bump");
+                audioSource.Play();
             }
+
         }
         transform.position = new Vector3(col - GC.offset, row, 0);
     }
@@ -111,7 +118,7 @@ public class SquirrelController : MonoBehaviour
         int i = 3;
         while (true)
         {
-            if (GC.GetTerrain(row, col + i) == 0 || GC.GetTerrain(row, col + i) == 2)
+            if (GC.GetTerrain(row, col + i) == '-' || GC.GetTerrain(row, col + i) == '=')
             {
                 break;
             }
