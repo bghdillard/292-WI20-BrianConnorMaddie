@@ -71,18 +71,74 @@ public class SquirrelController : MonoBehaviour
                 col = newCol;
                 if (moveL)
                 {
+                    while(t == '=')
+                    {
+                        newCol--;
+                        t = GC.GetTerrain(row, newCol);
+                        if (t == '-' || t == '=' || t == '<' || t == '>')
+                        {
+                            col = newCol;
+                            transform.position = new Vector3(col - GC.offset, row, 0);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
                     anim.SetTrigger("MoveLeft");
                 }
                 else if (moveR)
                 {
+                    while (t == '=')
+                    {
+                        newCol++;
+                        t = GC.GetTerrain(row, newCol);
+                        if (t == '-' || t == '=' || t == '<' || t == '>')
+                        {
+                            col = newCol;
+                            transform.position = new Vector3(col - GC.offset, row, 0);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
                     anim.SetTrigger("MoveRight");
                 }
                 else if (moveU)
                 {
+                    while (t == '=')
+                    {
+                        newRow++;
+                        t = GC.GetTerrain(newRow, col);
+                        if (t == '-' || t == '=' || t == '<' || t == '>')
+                        {
+                            row = newRow;
+                            transform.position = new Vector3(col - GC.offset, row, 0);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
                     anim.SetTrigger("MoveUp");
                 }
                 else if (moveD)
                 {
+                    while (t == '=')
+                    {
+                        newRow--;
+                        t = GC.GetTerrain(newRow, col);
+                        if (t == '-' || t == '=' || t == '<' || t == '>')
+                        {
+                            row = newRow;
+                            transform.position = new Vector3(col - GC.offset, row, 0);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
                     anim.SetTrigger("MoveDown");
                 }
             }
