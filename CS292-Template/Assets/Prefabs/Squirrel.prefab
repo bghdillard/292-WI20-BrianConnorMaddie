@@ -117,6 +117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   squirrel: {fileID: 9079002216964490105}
+  speed: 4
   row: 3
   col: 3
   health: 3

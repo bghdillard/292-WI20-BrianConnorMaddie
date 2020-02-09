@@ -10,6 +10,7 @@ public class SquirrelController : MonoBehaviour
     Animator anim;
     public GameObject squirrel;
 
+    public float speed = 1.0f;
     public int row;
     public int col;
     public int health;
@@ -30,6 +31,13 @@ public class SquirrelController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        float step = speed * Time.deltaTime;
+
+        bool moveL = false;
+        bool moveR = false;
+        bool moveU = false;
+        bool moveD = false;
+
         if (!dead)
         {
             if (GC.GetTerrain(row,col) == '|')
@@ -38,11 +46,6 @@ public class SquirrelController : MonoBehaviour
             }
             int newRow = row;
             int newCol = col;
-            bool moveL = false;
-            bool moveR = false;
-            bool moveU = false;
-            bool moveD = false;
-
             if (Input.GetKeyDown(KeyCode.A))
             {
                 newCol -= 1;
@@ -78,7 +81,8 @@ public class SquirrelController : MonoBehaviour
                         if (t == '-' || t == '=' || t == '<' || t == '>')
                         {
                             col = newCol;
-                            transform.position = new Vector3(col - GC.offset, row, 0);
+                            transform.position = Vector3.MoveTowards(transform.position,
+                                new Vector3(col - GC.offset, row, 0), step);
                         }
                         else
                         {
@@ -96,7 +100,8 @@ public class SquirrelController : MonoBehaviour
                         if (t == '-' || t == '=' || t == '<' || t == '>')
                         {
                             col = newCol;
-                            transform.position = new Vector3(col - GC.offset, row, 0);
+                            transform.position = Vector3.MoveTowards(transform.position,
+                                new Vector3(col - GC.offset, row, 0), step);
                         }
                         else
                         {
@@ -114,7 +119,8 @@ public class SquirrelController : MonoBehaviour
                         if (t == '-' || t == '=' || t == '<' || t == '>')
                         {
                             row = newRow;
-                            transform.position = new Vector3(col - GC.offset, row, 0);
+                            transform.position = Vector3.MoveTowards(transform.position,
+                                new Vector3(col - GC.offset, row, 0), step);
                         }
                         else
                         {
@@ -132,7 +138,8 @@ public class SquirrelController : MonoBehaviour
                         if (t == '-' || t == '=' || t == '<' || t == '>')
                         {
                             row = newRow;
-                            transform.position = new Vector3(col - GC.offset, row, 0);
+                            transform.position = Vector3.MoveTowards(transform.position,
+                                new Vector3(col - GC.offset, row, 0), step);
                         }
                         else
                         {
@@ -143,7 +150,9 @@ public class SquirrelController : MonoBehaviour
                 }
             }
         }
-        transform.position = new Vector3(col - GC.offset, row, 0);
+            transform.position = Vector3.MoveTowards(transform.position, 
+                new Vector3(col - GC.offset, row, 0), step);
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

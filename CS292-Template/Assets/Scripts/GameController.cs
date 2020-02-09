@@ -50,7 +50,7 @@ public class GameController : MonoBehaviour
     void Start()
     {
         GameObject tlayers = Instantiate(TerrainLayers, new Vector3(0.3f, 0, 0), Quaternion.identity).gameObject;
-        GameObject squirrel = Instantiate(Squirrel, new Vector3(0, 0, 0), Quaternion.identity).gameObject;
+        GameObject squirrel = Instantiate(Squirrel, new Vector3(3, 3, 0), Quaternion.identity).gameObject;
 
         TerrainTileset = tlayers.transform.Find("TerrainGrid/TerrainMap").gameObject;
         ObjectTileset = tlayers.transform.Find("ObjectGrid/ObjectMap").gameObject;
