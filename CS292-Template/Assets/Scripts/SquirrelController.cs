@@ -126,4 +126,9 @@ public class SquirrelController : MonoBehaviour
         //s.ChangeHealth(-1);
         Destroy(gameObject);
     }
+
+    public bool isDead(){
+        return dead;
+    }
+
 }

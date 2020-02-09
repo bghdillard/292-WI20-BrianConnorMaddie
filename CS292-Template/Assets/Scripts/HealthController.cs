@@ -12,6 +12,8 @@ public class HealthController : MonoBehaviour
     void Start()
     {
         //begining lives
+        GameObject thePlayer = GameObject.Find("SquirrelController");
+        SquirrelController squirrel = thePlayer.GetComponent<SquirrelController>();
         health = 3;
         heart1.SetActive(true);
         heart2.SetActive(true);
@@ -22,14 +24,18 @@ public class HealthController : MonoBehaviour
     void Update()
     {
         //updating health
-        if (health > 3)
+        /* (health > 3)
         {
             health = 3;
             heart1.SetActive(true);
             heart2.SetActive(true);
             heart3.SetActive(true);
         }
-        else if (health == 3)
+        else */
+        GameObject thePlayer = GameObject.Find("SquirrelController");
+        SquirrelController squirrel = thePlayer.GetComponent<SquirrelController>();
+        
+        if (health == 3)
         {
             heart1.SetActive(true);
             heart2.SetActive(true);
@@ -52,5 +58,11 @@ public class HealthController : MonoBehaviour
             heart2.SetActive(false);
             heart3.SetActive(false);
         }
+
+        if (squirrel.isDead() == true)
+        {
+            health -= 1;
+        }
+
     }
 }
