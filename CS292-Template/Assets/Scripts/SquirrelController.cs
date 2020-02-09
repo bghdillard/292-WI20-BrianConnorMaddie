@@ -7,7 +7,9 @@ public class SquirrelController : MonoBehaviour
 
     GameObject Controller;
     GameController GC;
+    Vector3 target;
     Animator anim;
+    Rigidbody2D body;
     public GameObject squirrel;
 
     public float speed = 1.0f;
@@ -15,8 +17,7 @@ public class SquirrelController : MonoBehaviour
     public int col;
     public int health;
     bool dead;
-
-    Rigidbody2D body;
+    bool canMove;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +27,8 @@ public class SquirrelController : MonoBehaviour
         anim = GetComponent<Animator>();
         dead = false;
         body = GetComponent<Rigidbody2D>();
+        canMove = true;
+        target = transform.position;
     }
 
     // Update is called once per frame
@@ -38,7 +41,9 @@ public class SquirrelController : MonoBehaviour
         bool moveU = false;
         bool moveD = false;
 
-        if (!dead)
+        canMove = Vector3.Distance(transform.position, target) <= 0.001f;
+
+        if (!dead && canMove)
         {
             if (GC.GetTerrain(row,col) == '|')
             {
@@ -150,9 +155,13 @@ public class SquirrelController : MonoBehaviour
                 }
             }
         }
+        if(moveU || moveD || moveL || moveR)
+        {
+            canMove = false;
+        }
+        target = new Vector3(col - GC.offset, row, 0);
             transform.position = Vector3.MoveTowards(transform.position, 
-                new Vector3(col - GC.offset, row, 0), step);
-        
+                target, step);   
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
