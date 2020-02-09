@@ -32,7 +32,7 @@ public class SquirrelController : MonoBehaviour
     {
         if (!dead)
         {
-            if (GC.GetTerrain(row,col) == -1)
+            if (GC.GetTerrain(row,col) == '|')
             {
                 offScreen();
             }
@@ -108,22 +108,25 @@ public class SquirrelController : MonoBehaviour
 
     private void offScreen()
     {
-        int i = 3;
-        while (true)
+        ChangeHealth(-1);
+        if (!dead)
         {
-            if (GC.GetTerrain(row, col + i) == 0 || GC.GetTerrain(row, col + i) == 2)
+            int i = 3;
+            while (true)
             {
-                break;
+                if (GC.GetTerrain(row, col + i) == '=' || GC.GetTerrain(row, col + i) == '-')
+                {
+                    break;
+                }
+                i++;
             }
-            i++;
+            GameObject other = Instantiate(squirrel, new Vector3(transform.position.x + i,
+                transform.position.y, 0), Quaternion.identity).gameObject;
+            SquirrelController s = other.GetComponent<SquirrelController>();
+            s.col = col + i;
+            s.row = row;
+            s.health = health;
+            Destroy(gameObject);
         }
-        GameObject other = Instantiate(squirrel, new Vector3(transform.position.x + i,
-            transform.position.y, 0), Quaternion.identity).gameObject;
-        SquirrelController s = other.GetComponent<SquirrelController>();
-        s.col = col + i;
-        s.row = row;
-        s.health = health;
-        //s.ChangeHealth(-1);
-        Destroy(gameObject);
     }
 }
