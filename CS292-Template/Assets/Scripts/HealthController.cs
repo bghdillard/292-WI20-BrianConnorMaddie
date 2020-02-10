@@ -33,10 +33,6 @@ public class HealthController : MonoBehaviour
         GameObject thePlayer = GameObject.Find("SquirrelController");
         SquirrelController squirrel = thePlayer.GetComponent<SquirrelController>();
 
-        GameObject menus = GameObject.Find("Menus");
-        Menus gameOver = menus.GetComponent<Menus>();
-
-
         if (health == 3)
         {
             heart1.SetActive(true);

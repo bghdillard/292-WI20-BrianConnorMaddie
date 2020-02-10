@@ -15,12 +15,12 @@ public class Menus : MonoBehaviour
 
     void Update()
     {
-        GameObject HP = GameObject.Find("HealthController");
-        HealthController health = HP.GetComponent<HealthController>();
-        if (health.health == 0)
+        /*GameObject HP = GameObject.Find("HealthController");
+        HealthController h = HP.GetComponent<HealthController>();
+        if (h.health == 0)
         {
             gameover();
-        }
+        }*/
     }
 
     void game() {

@@ -265,6 +265,7 @@ MonoBehaviour:
   heart1: {fileID: 7941421075469206517}
   heart2: {fileID: 7941421077300070501}
   heart3: {fileID: 7941421076596928407}
+  health: 0
 --- !u!1 &7941421076273897912
 GameObject:
   m_ObjectHideFlags: 0
@@ -284,7 +285,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7941421076273897908
 RectTransform:
   m_ObjectHideFlags: 0
@@ -485,6 +486,7 @@ MonoBehaviour:
   heart1: {fileID: 7941421075469206517}
   heart2: {fileID: 7941421077300070501}
   heart3: {fileID: 7941421076596928407}
+  health: 0
 --- !u!1 &7941421076831925836
 GameObject:
   m_ObjectHideFlags: 0
@@ -620,3 +622,4 @@ MonoBehaviour:
   heart1: {fileID: 7941421075469206517}
   heart2: {fileID: 7941421077300070501}
   heart3: {fileID: 7941421076596928407}
+  health: 0

@@ -274,6 +274,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Everything
       objectReference: {fileID: 0}
+    - target: {fileID: 1192761896855502253, guid: dc5ef48ce26a7684d977f3eea9bfd962,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1192761897631783287, guid: dc5ef48ce26a7684d977f3eea9bfd962,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -376,6 +381,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Target
       value: 
       objectReference: {fileID: 965391495}
+    - target: {fileID: 741455491929279632, guid: c83804bd997d3104f997c4cad889573b,
+        type: 3}
+      propertyPath: m_RenderMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 741455491929279635, guid: c83804bd997d3104f997c4cad889573b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -485,6 +495,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Game Over
+      objectReference: {fileID: 0}
+    - target: {fileID: 741455491929279663, guid: c83804bd997d3104f997c4cad889573b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c83804bd997d3104f997c4cad889573b, type: 3}
@@ -609,6 +624,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Game UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 7941421076273897912, guid: 431dbc9298c69024a8bddf8f20849c20,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 431dbc9298c69024a8bddf8f20849c20, type: 3}
@@ -747,22 +767,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8040227195682849743, guid: 2c6f2aef4c351f34cba003f2c0a57ac3,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 57293728}
+    - target: {fileID: 8040227195682849743, guid: 2c6f2aef4c351f34cba003f2c0a57ac3,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1698501230}
     - target: {fileID: 8040227195682849743, guid: 2c6f2aef4c351f34cba003f2c0a57ac3,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
-      value: 
-      objectReference: {fileID: 57293728}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
     - target: {fileID: 8040227196596313865, guid: 2c6f2aef4c351f34cba003f2c0a57ac3,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1698501230}
     - target: {fileID: 8040227196596313865, guid: 2c6f2aef4c351f34cba003f2c0a57ac3,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 57293728}
     - target: {fileID: 8040227197077958355, guid: 2c6f2aef4c351f34cba003f2c0a57ac3,
@@ -934,6 +959,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Credits Screen
       objectReference: {fileID: 0}
+    - target: {fileID: 6514245632519580588, guid: 1a24d3d4ec1b6ba41b44776e5f05cb72,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a24d3d4ec1b6ba41b44776e5f05cb72, type: 3}
 --- !u!1001 &7188540151369428165
@@ -943,6 +973,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 663100131573805754, guid: fd4876a920ec2644db5c5676e2f355e8,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 663100131573805754, guid: fd4876a920ec2644db5c5676e2f355e8,
+        type: 3}
+      propertyPath: m_PixelPerfect
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 890837436774759679, guid: fd4876a920ec2644db5c5676e2f355e8,
         type: 3}
       propertyPath: title
@@ -1082,6 +1122,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Settings Screen
+      objectReference: {fileID: 0}
+    - target: {fileID: 6114006442111936349, guid: fd4876a920ec2644db5c5676e2f355e8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd4876a920ec2644db5c5676e2f355e8, type: 3}
