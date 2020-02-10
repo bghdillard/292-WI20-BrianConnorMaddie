@@ -9,6 +9,7 @@ public class CarGenController : MonoBehaviour
     public GameController parent;
     public int direction;
     public CarController carPrefab;
+    public GameObject squirrel;
     void Start()
     {
         cooldown = Random.Range(0, 70);
@@ -22,6 +23,7 @@ public class CarGenController : MonoBehaviour
             CarController tc = Instantiate(carPrefab, transform.position, Quaternion.identity);
             tc.parent = parent;
             tc.direction = direction;
+            tc.squirrel = squirrel;
             tc.SetFlip();
             cooldown = 100 - Random.Range(0, 30);
         }

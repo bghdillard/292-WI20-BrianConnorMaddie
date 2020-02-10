@@ -50,11 +50,10 @@ public class GameController : MonoBehaviour
     void Start()
     {
         GameObject tlayers = Instantiate(TerrainLayers, new Vector3(0, 0, 0), Quaternion.identity).gameObject;
-        GameObject squirrel = Instantiate(Squirrel, new Vector3(0, 0, 0), Quaternion.identity).gameObject;
+        Squirrel = Instantiate(Squirrel, new Vector3(3, 3, 0), Quaternion.identity).gameObject;
 
         TerrainTileset = tlayers.transform.Find("TerrainGrid/TerrainMap").gameObject;
         ObjectTileset = tlayers.transform.Find("ObjectGrid/ObjectMap").gameObject;
-
 
         terrain = TerrainTileset.GetComponent<Tilemap>();
         objects = ObjectTileset.GetComponent<Tilemap>();
@@ -190,16 +189,16 @@ public class GameController : MonoBehaviour
             else{T[front][i] = '<';}
         }
         
-
+        CarGenController tg;
         if(dir == 1){
-            CarGenController tg = Instantiate(cgen, new Vector3(front - offset, -3, 0), Quaternion.identity);
+            tg = Instantiate(cgen, new Vector3(front - offset, -3, 0), Quaternion.identity);
             tg.direction = 1;
-            tg.parent = this;
         }else{
-            CarGenController tg = Instantiate(cgen, new Vector3(front - offset, 12, 0), Quaternion.identity);
+            tg = Instantiate(cgen, new Vector3(front - offset, 12, 0), Quaternion.identity);
             tg.direction = -1;
-            tg.parent = this;
         }
+        tg.parent = this;
+        tg.squirrel = Squirrel;
     }
 
     void MakeTracks(int dir){
@@ -212,15 +211,17 @@ public class GameController : MonoBehaviour
             else{T[front][i] = '<';}
         }
 
+        TrainGenController tg;
         if(dir == 1){
-            TrainGenController tg = Instantiate(tgen, new Vector3(front - offset, -3, 0), Quaternion.identity);
+            tg = Instantiate(tgen, new Vector3(front - offset, -3, 0), Quaternion.identity);
             tg.direction = 1;
-            tg.parent = this;
+            
         }else{
-            TrainGenController tg = Instantiate(tgen, new Vector3(front - offset, 12, 0), Quaternion.identity);
+            tg = Instantiate(tgen, new Vector3(front - offset, 12, 0), Quaternion.identity);
             tg.direction = -1;
-            tg.parent = this;
         }
+        tg.parent = this;
+        tg.squirrel = Squirrel;
     }
 
     void MakePassable()

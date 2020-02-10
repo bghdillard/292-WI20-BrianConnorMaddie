@@ -10,12 +10,17 @@ public class TrainController : MonoBehaviour
     public GameObject parentObj;
     public GameController parent;
     public List<Sprite> sprites;
+    public GameObject squirrel;
+    public AudioSource audioSource;
+    public AudioClip clip;
+    bool passed;
     // Start is called before the first frame update
     void Start()
     {
         Sprite newSprite = rc(sprites);
         gameObject.GetComponent<SpriteRenderer>().sprite = newSprite;
-        //parent = parentObj.GetComponent<GameController>();
+        audioSource = gameObject.GetComponent<AudioSource>();
+        passed = false;
     }
 
     public void SetFlip()
@@ -40,6 +45,12 @@ public class TrainController : MonoBehaviour
         }
         if(transform.position.y > 12){
             Destroy(gameObject);
+        }
+
+        float dist = Vector3.Distance(squirrel.transform.position, transform.position);
+        if(passed == false && dist < 3){
+            passed = true;
+            audioSource.Play();
         }
     }
 

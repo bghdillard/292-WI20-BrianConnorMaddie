@@ -8,6 +8,7 @@ public class TrainGenController : MonoBehaviour
     public TrainController trainPrefab;
     public GameObject parentObj;
     public GameController parent;
+    public GameObject squirrel;
     public int direction;
     void Start()
     {
@@ -23,6 +24,7 @@ public class TrainGenController : MonoBehaviour
             TrainController tc = Instantiate(trainPrefab, transform.position, Quaternion.identity);
             tc.parent = parent;
             tc.direction = direction;
+            tc.squirrel = squirrel;
             tc.SetFlip();
             cooldown = 210 - Random.Range(0, 70);
         }

@@ -9,12 +9,18 @@ public class CarController : MonoBehaviour
 
     public GameObject parentObj;
     public GameController parent;
+    public GameObject squirrel;
     public List<Sprite> sprites;
+    public AudioSource audioSource;
+    public AudioClip clip;
+    bool passed;
 
     void Start()
     {
         Sprite newSprite = rc(sprites);
         gameObject.GetComponent<SpriteRenderer>().sprite = newSprite;
+        audioSource = gameObject.GetComponent<AudioSource>();
+        passed = false;
     }
 
     public void SetFlip()
@@ -40,6 +46,12 @@ public class CarController : MonoBehaviour
         }
         if(transform.position.y > 12){
             Destroy(gameObject);
+        }
+
+        float dist = Vector3.Distance(squirrel.transform.position, transform.position);
+        if(passed == false && dist < 4){
+            passed = true;
+            audioSource.Play();
         }
     }
 
