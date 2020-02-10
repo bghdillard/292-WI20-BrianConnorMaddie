@@ -55,131 +55,133 @@ public class SquirrelController : MonoBehaviour
 
         canMove = Vector3.Distance(transform.position, target) <= 0.001f;
 
-            if (!dead)
+        if (!dead)
+        {
+            if (GC.GetTerrain(row, col) == '|')
             {
-                if (GC.GetTerrain(row, col) == '|')
-                {
-                    offScreen();
-                }
-                if (Input.touchCount > 0)
-                {
-                Touch touch = Input.GetTouch(0);
-                    if (canMove && touch.phase == TouchPhase.Began)
-                    {
-                        int newRow = row;
-                        int newCol = col;
-                        if (Input.GetKeyDown(KeyCode.A) || left.Contains(touch.position))
-                        {
-                            newCol -= 1;
-                            moveL = true;
-                        }
-                        if (Input.GetKeyDown(KeyCode.D) || right.Contains(touch.position))
-                        {
-                            newCol += 1;
-                            moveR = true;
-                        }
-                        if (Input.GetKeyDown(KeyCode.W) || top.Contains(touch.position))
-                        {
-                            newRow += 1;
-                            moveU = true;
-                        }
-                        if (Input.GetKeyDown(KeyCode.S) || bottom.Contains(touch.position))
-                        {
-                            newRow -= 1;
-                            moveD = true;
-                        }
-
-                        char t = GC.GetTerrain(newRow, newCol);
-                        if (t == '-' || t == '=' || t == '<' || t == '>')
-                        {
-                            row = newRow;
-                            col = newCol;
-                            if (moveL)
-                            {
-                                while (t == '=')
-                                {
-                                    newCol--;
-                                    t = GC.GetTerrain(row, newCol);
-                                    if (t == '-' || t == '=' || t == '<' || t == '>')
-                                    {
-                                        col = newCol;
-                                        transform.position = Vector3.MoveTowards(transform.position,
-                                            new Vector3(col - GC.offset, row, 0), step);
-                                    }
-                                    else
-                                    {
-                                        break;
-                                    }
-                                }
-                                anim.SetTrigger("MoveLeft");
-                            }
-                            else if (moveR)
-                            {
-                                while (t == '=')
-                                {
-                                    newCol++;
-                                    t = GC.GetTerrain(row, newCol);
-                                    if (t == '-' || t == '=' || t == '<' || t == '>')
-                                    {
-                                        col = newCol;
-                                        transform.position = Vector3.MoveTowards(transform.position,
-                                            new Vector3(col - GC.offset, row, 0), step);
-                                    }
-                                    else
-                                    {
-                                        break;
-                                    }
-                                }
-                                anim.SetTrigger("MoveRight");
-                            }
-                            else if (moveU)
-                            {
-                                while (t == '=')
-                                {
-                                    newRow++;
-                                    t = GC.GetTerrain(newRow, col);
-                                    if (t == '-' || t == '=' || t == '<' || t == '>')
-                                    {
-                                        row = newRow;
-                                        transform.position = Vector3.MoveTowards(transform.position,
-                                            new Vector3(col - GC.offset, row, 0), step);
-                                    }
-                                    else
-                                    {
-                                        break;
-                                    }
-                                }
-                                anim.SetTrigger("MoveUp");
-                            }
-                            else if (moveD)
-                            {
-                                while (t == '=')
-                                {
-                                    newRow--;
-                                    t = GC.GetTerrain(newRow, col);
-                                    if (t == '-' || t == '=' || t == '<' || t == '>')
-                                    {
-                                        row = newRow;
-                                        transform.position = Vector3.MoveTowards(transform.position,
-                                            new Vector3(col - GC.offset, row, 0), step);
-                                    }
-                                    else
-                                    {
-                                        break;
-                                    }
-                                }
-                                anim.SetTrigger("MoveDown");
-                            }
-                        }
-                    }
-                    if (moveU || moveD || moveL || moveR)
-                    {
-                        canMove = false;
-                    }
-                }
-            }else{
-                audioSource.Play();
+                offScreen();
             }
+            //if (Input.touchCount > 0 || Input.GetMouseButtonDown(0))
+            //{
+            //Vector3 touch = Input.mousePosition;
+            if (canMove)// && touch.phase == TouchPhase.Began)
+            {
+                int newRow = row;
+                int newCol = col;
+                if (Input.GetKeyDown(KeyCode.A))// || left.Contains(touch))
+                {
+                    newCol -= 1;
+                    moveL = true;
+                }
+                if (Input.GetKeyDown(KeyCode.D))// || right.Contains(touch))
+                {
+                    newCol += 1;
+                    moveR = true;
+                }
+                if (Input.GetKeyDown(KeyCode.W))// || top.Contains(touch))
+                {
+                    newRow += 1;
+                    moveU = true;
+                }
+                if (Input.GetKeyDown(KeyCode.S))// || bottom.Contains(touch))
+                {
+                    newRow -= 1;
+                    moveD = true;
+                }
+
+                char t = GC.GetTerrain(newRow, newCol);
+                if (t == '-' || t == '=' || t == '<' || t == '>')
+                {
+                    row = newRow;
+                    col = newCol;
+                    if (moveL)
+                    {
+                        while (t == '=')
+                        {
+                            newCol--;
+                            t = GC.GetTerrain(row, newCol);
+                            if (t == '-' || t == '=' || t == '<' || t == '>')
+                            {
+                                col = newCol;
+                                transform.position = Vector3.MoveTowards(transform.position,
+                                    new Vector3(col - GC.offset, row, 0), step);
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                        anim.SetTrigger("MoveLeft");
+                    }
+                    else if (moveR)
+                    {
+                        while (t == '=')
+                        {
+                            newCol++;
+                            t = GC.GetTerrain(row, newCol);
+                            if (t == '-' || t == '=' || t == '<' || t == '>')
+                            {
+                                col = newCol;
+                                transform.position = Vector3.MoveTowards(transform.position,
+                                    new Vector3(col - GC.offset, row, 0), step);
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                        anim.SetTrigger("MoveRight");
+                    }
+                    else if (moveU)
+                    {
+                        while (t == '=')
+                        {
+                            newRow++;
+                            t = GC.GetTerrain(newRow, col);
+                            if (t == '-' || t == '=' || t == '<' || t == '>')
+                            {
+                                row = newRow;
+                                transform.position = Vector3.MoveTowards(transform.position,
+                                    new Vector3(col - GC.offset, row, 0), step);
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                        anim.SetTrigger("MoveUp");
+                    }
+                    else if (moveD)
+                    {
+                        while (t == '=')
+                        {
+                            newRow--;
+                            t = GC.GetTerrain(newRow, col);
+                            if (t == '-' || t == '=' || t == '<' || t == '>')
+                            {
+                                row = newRow;
+                                transform.position = Vector3.MoveTowards(transform.position,
+                                    new Vector3(col - GC.offset, row, 0), step);
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                        anim.SetTrigger("MoveDown");
+                    }
+                }
+                else
+                {
+                    audioSource.Play();
+                }
+                if (moveU || moveD || moveL || moveR)
+                {
+                    canMove = false;
+                }
+                //}
+            }
+        }
         target = new Vector3(col - GC.offset, row, 0);
             transform.position = Vector3.MoveTowards(transform.position, 
                 target, step);   
