@@ -17,7 +17,10 @@ public class ScoreController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        GameObject thePlayer = GameObject.Find("SquirrelController");
+        SquirrelController squirrel = thePlayer.GetComponent<SquirrelController>();
+
         score.text = "Score " + scoreVal;
-        scoreVal += 1;
+        scoreVal += squirrel.col;
     }
 }

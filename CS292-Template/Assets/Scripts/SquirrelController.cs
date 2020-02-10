@@ -210,4 +210,9 @@ public class SquirrelController : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    public bool isDead(){
+        return dead;
+    }
+
 }
