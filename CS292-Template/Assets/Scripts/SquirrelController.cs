@@ -7,17 +7,19 @@ public class SquirrelController : MonoBehaviour
 
     GameObject Controller;
     GameController GC;
+    Vector3 target;
     Animator anim;
+    Rigidbody2D body;
     public GameObject squirrel;
 
+    public float speed = 1.0f;
     public int row;
     public int col;
     public int health;
     public AudioSource audioSource;
     public AudioClip bump;
     bool dead;
-
-    Rigidbody2D body;
+    bool canMove;
 
     // Start is called before the first frame update
     void Start()
@@ -28,24 +30,30 @@ public class SquirrelController : MonoBehaviour
         anim = GetComponent<Animator>();
         dead = false;
         body = GetComponent<Rigidbody2D>();
+        canMove = true;
+        target = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!dead)
+        float step = speed * Time.deltaTime;
+
+        bool moveL = false;
+        bool moveR = false;
+        bool moveU = false;
+        bool moveD = false;
+
+        canMove = Vector3.Distance(transform.position, target) <= 0.001f;
+
+        if (!dead && canMove)
         {
-            if (GC.GetTerrain(row,col) == -1)
+            if (GC.GetTerrain(row,col) == '|')
             {
                 offScreen();
             }
             int newRow = row;
             int newCol = col;
-            bool moveL = false;
-            bool moveR = false;
-            bool moveU = false;
-            bool moveD = false;
-
             if (Input.GetKeyDown(KeyCode.A))
             {
                 newCol -= 1;
@@ -74,18 +82,78 @@ public class SquirrelController : MonoBehaviour
                 col = newCol;
                 if (moveL)
                 {
+                    while(t == '=')
+                    {
+                        newCol--;
+                        t = GC.GetTerrain(row, newCol);
+                        if (t == '-' || t == '=' || t == '<' || t == '>')
+                        {
+                            col = newCol;
+                            transform.position = Vector3.MoveTowards(transform.position,
+                                new Vector3(col - GC.offset, row, 0), step);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
                     anim.SetTrigger("MoveLeft");
                 }
                 else if (moveR)
                 {
+                    while (t == '=')
+                    {
+                        newCol++;
+                        t = GC.GetTerrain(row, newCol);
+                        if (t == '-' || t == '=' || t == '<' || t == '>')
+                        {
+                            col = newCol;
+                            transform.position = Vector3.MoveTowards(transform.position,
+                                new Vector3(col - GC.offset, row, 0), step);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
                     anim.SetTrigger("MoveRight");
                 }
                 else if (moveU)
                 {
+                    while (t == '=')
+                    {
+                        newRow++;
+                        t = GC.GetTerrain(newRow, col);
+                        if (t == '-' || t == '=' || t == '<' || t == '>')
+                        {
+                            row = newRow;
+                            transform.position = Vector3.MoveTowards(transform.position,
+                                new Vector3(col - GC.offset, row, 0), step);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
                     anim.SetTrigger("MoveUp");
                 }
                 else if (moveD)
                 {
+                    while (t == '=')
+                    {
+                        newRow--;
+                        t = GC.GetTerrain(newRow, col);
+                        if (t == '-' || t == '=' || t == '<' || t == '>')
+                        {
+                            row = newRow;
+                            transform.position = Vector3.MoveTowards(transform.position,
+                                new Vector3(col - GC.offset, row, 0), step);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
                     anim.SetTrigger("MoveDown");
                 }
             }else{
@@ -94,7 +162,13 @@ public class SquirrelController : MonoBehaviour
             }
 
         }
-        transform.position = new Vector3(col - GC.offset, row, 0);
+        if(moveU || moveD || moveL || moveR)
+        {
+            canMove = false;
+        }
+        target = new Vector3(col - GC.offset, row, 0);
+            transform.position = Vector3.MoveTowards(transform.position, 
+                target, step);   
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -115,22 +189,25 @@ public class SquirrelController : MonoBehaviour
 
     private void offScreen()
     {
-        int i = 3;
-        while (true)
+        ChangeHealth(-1);
+        if (!dead)
         {
-            if (GC.GetTerrain(row, col + i) == '-' || GC.GetTerrain(row, col + i) == '=')
+            int i = 3;
+            while (true)
             {
-                break;
+                if (GC.GetTerrain(row, col + i) == '=' || GC.GetTerrain(row, col + i) == '-')
+                {
+                    break;
+                }
+                i++;
             }
-            i++;
+            GameObject other = Instantiate(squirrel, new Vector3(transform.position.x + i,
+                transform.position.y, 0), Quaternion.identity).gameObject;
+            SquirrelController s = other.GetComponent<SquirrelController>();
+            s.col = col + i;
+            s.row = row;
+            s.health = health;
+            Destroy(gameObject);
         }
-        GameObject other = Instantiate(squirrel, new Vector3(transform.position.x + i,
-            transform.position.y, 0), Quaternion.identity).gameObject;
-        SquirrelController s = other.GetComponent<SquirrelController>();
-        s.col = col + i;
-        s.row = row;
-        s.health = health;
-        //s.ChangeHealth(-1);
-        Destroy(gameObject);
     }
 }
