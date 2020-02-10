@@ -383,6 +383,7 @@ MonoBehaviour:
   credits: {fileID: 6514245632519580588, guid: 1a24d3d4ec1b6ba41b44776e5f05cb72, type: 3}
   gameUI: {fileID: 7941421076273897912}
   gameplay: {fileID: 0}
+  GameOver: {fileID: 741455491929279663, guid: c83804bd997d3104f997c4cad889573b, type: 3}
 --- !u!1 &7941421076596928407
 GameObject:
   m_ObjectHideFlags: 0
@@ -494,7 +495,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7941421076831925835}
   m_Layer: 0
-  m_Name: Panel_UI (Missing Prefab)
+  m_Name: Panel_UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -592,7 +593,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 3bab7897f6465fa4bb9df9d053957912, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

@@ -25,11 +25,14 @@ public class SquirrelController : MonoBehaviour
         anim = GetComponent<Animator>();
         dead = false;
         body = GetComponent<Rigidbody2D>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+
+
         if (!dead)
         {
             if (GC.GetTerrain(row,col) == '|')

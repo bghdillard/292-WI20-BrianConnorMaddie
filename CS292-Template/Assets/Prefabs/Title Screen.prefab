@@ -121,6 +121,7 @@ MonoBehaviour:
   credits: {fileID: 0}
   gameUI: {fileID: 0}
   gameplay: {fileID: 0}
+  GameOver: {fileID: 741455491929279663, guid: c83804bd997d3104f997c4cad889573b, type: 3}
 --- !u!1 &8040227195682849737
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Menus : MonoBehaviour
 {
 
-    public GameObject title, settings, credits, gameUI, gameplay;
+    public GameObject title, settings, credits, gameUI, gameplay, GameOver;
 
 
     void Start()
@@ -15,7 +15,12 @@ public class Menus : MonoBehaviour
 
     void Update()
     {
-        
+        GameObject HP = GameObject.Find("HealthController");
+        HealthController health = HP.GetComponent<HealthController>();
+        if (health.health == 0)
+        {
+            gameover();
+        }
     }
 
     void game() {
@@ -24,6 +29,7 @@ public class Menus : MonoBehaviour
         credits.SetActive(false);
         gameplay.SetActive(true);
         gameUI.SetActive(true);
+        GameOver.SetActive(false);
 
     }
 
@@ -33,6 +39,7 @@ public class Menus : MonoBehaviour
         credits.SetActive(false);
         gameplay.SetActive(false);
         gameUI.SetActive(false);
+        GameOver.SetActive(false);
     }
 
     void settingsScreen() {
@@ -41,6 +48,7 @@ public class Menus : MonoBehaviour
         credits.SetActive(false);
         gameplay.SetActive(false);
         gameUI.SetActive(false);
+        GameOver.SetActive(false);
 
     }
 
@@ -50,6 +58,18 @@ public class Menus : MonoBehaviour
         credits.SetActive(true);
         gameplay.SetActive(false);
         gameUI.SetActive(false);
+        GameOver.SetActive(false);
+    }
+
+    void gameover() {
+        
+
+        title.SetActive(false);
+        settings.SetActive(false);
+        credits.SetActive(false);
+        gameplay.SetActive(true);
+        gameUI.SetActive(true);
+        GameOver.SetActive(true);
     }
 
 

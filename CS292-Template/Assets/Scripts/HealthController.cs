@@ -6,14 +6,12 @@ public class HealthController : MonoBehaviour
 {
 
     public GameObject heart1, heart2, heart3;
-    int health;
+    public int health;
 
     // Start is called before the first frame update
     void Start()
     {
         //begining lives
-        GameObject thePlayer = GameObject.Find("SquirrelController");
-        SquirrelController squirrel = thePlayer.GetComponent<SquirrelController>();
         health = 3;
         heart1.SetActive(true);
         heart2.SetActive(true);
@@ -34,7 +32,11 @@ public class HealthController : MonoBehaviour
         else */
         GameObject thePlayer = GameObject.Find("SquirrelController");
         SquirrelController squirrel = thePlayer.GetComponent<SquirrelController>();
-        
+
+        GameObject menus = GameObject.Find("Menus");
+        Menus gameOver = menus.GetComponent<Menus>();
+
+
         if (health == 3)
         {
             heart1.SetActive(true);
@@ -57,6 +59,8 @@ public class HealthController : MonoBehaviour
             heart1.SetActive(false);
             heart2.SetActive(false);
             heart3.SetActive(false);
+            
+            
         }
 
         if (squirrel.isDead() == true)
