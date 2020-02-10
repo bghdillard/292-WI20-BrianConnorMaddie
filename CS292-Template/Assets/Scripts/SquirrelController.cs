@@ -61,130 +61,103 @@ public class SquirrelController : MonoBehaviour
             {
                 offScreen();
             }
-            //if (Input.touchCount > 0 || Input.GetMouseButtonDown(0))
-            //{
-            //Vector3 touch = Input.mousePosition;
-            if (canMove)// && touch.phase == TouchPhase.Began)
-            {
-                int newRow = row;
-                int newCol = col;
-                if (Input.GetKeyDown(KeyCode.A))// || left.Contains(touch))
-                {
-                    newCol -= 1;
-                    moveL = true;
-                }
-                if (Input.GetKeyDown(KeyCode.D))// || right.Contains(touch))
-                {
-                    newCol += 1;
-                    moveR = true;
-                }
-                if (Input.GetKeyDown(KeyCode.W))// || top.Contains(touch))
-                {
-                    newRow += 1;
-                    moveU = true;
-                }
-                if (Input.GetKeyDown(KeyCode.S))// || bottom.Contains(touch))
-                {
-                    newRow -= 1;
-                    moveD = true;
-                }
 
-                char t = GC.GetTerrain(newRow, newCol);
-                if (t == '-' || t == '=' || t == '<' || t == '>')
+            int newRow = row;
+            int newCol = col;
+            if (Input.touchCount > 0)
+            {
+                Touch touch = Input.GetTouch(0);
+                if (canMove && touch.phase == TouchPhase.Began)
                 {
-                    row = newRow;
-                    col = newCol;
-                    if (moveL)
+                    
+                    if (Input.GetKeyDown(KeyCode.A) || left.Contains(touch.position))
                     {
-                        while (t == '=')
-                        {
-                            newCol--;
-                            t = GC.GetTerrain(row, newCol);
-                            if (t == '-' || t == '=' || t == '<' || t == '>')
-                            {
-                                col = newCol;
-                                transform.position = Vector3.MoveTowards(transform.position,
-                                    new Vector3(col - GC.offset, row, 0), step);
-                            }
-                            else
-                            {
-                                break;
-                            }
-                        }
-                        anim.SetTrigger("MoveLeft");
+                        newCol -= 1;
+                        moveL = true;
                     }
-                    else if (moveR)
+                    if (Input.GetKeyDown(KeyCode.D) || right.Contains(touch.position))
                     {
-                        while (t == '=')
-                        {
-                            newCol++;
-                            t = GC.GetTerrain(row, newCol);
-                            if (t == '-' || t == '=' || t == '<' || t == '>')
-                            {
-                                col = newCol;
-                                transform.position = Vector3.MoveTowards(transform.position,
-                                    new Vector3(col - GC.offset, row, 0), step);
-                            }
-                            else
-                            {
-                                break;
-                            }
-                        }
-                        anim.SetTrigger("MoveRight");
+                        newCol += 1;
+                        moveR = true;
                     }
-                    else if (moveU)
+                    if (Input.GetKeyDown(KeyCode.W) || top.Contains(touch.position))
                     {
-                        while (t == '=')
-                        {
-                            newRow++;
-                            t = GC.GetTerrain(newRow, col);
-                            if (t == '-' || t == '=' || t == '<' || t == '>')
-                            {
-                                row = newRow;
-                                transform.position = Vector3.MoveTowards(transform.position,
-                                    new Vector3(col - GC.offset, row, 0), step);
-                            }
-                            else
-                            {
-                                break;
-                            }
-                        }
-                        anim.SetTrigger("MoveUp");
+                        newRow += 1;
+                        moveU = true;
                     }
-                    else if (moveD)
+                    if (Input.GetKeyDown(KeyCode.S) || bottom.Contains(touch.position))
                     {
-                        while (t == '=')
-                        {
-                            newRow--;
-                            t = GC.GetTerrain(newRow, col);
-                            if (t == '-' || t == '=' || t == '<' || t == '>')
-                            {
-                                row = newRow;
-                                transform.position = Vector3.MoveTowards(transform.position,
-                                    new Vector3(col - GC.offset, row, 0), step);
-                            }
-                            else
-                            {
-                                break;
-                            }
-                        }
-                        anim.SetTrigger("MoveDown");
+                        newRow -= 1;
+                        moveD = true;
                     }
                 }
-                else
+            }else{
+                if (canMove)
                 {
-                    audioSource.Play();
+                    if (Input.GetKeyDown(KeyCode.A))
+                    {
+                        newCol -= 1;
+                        moveL = true;
+                    }
+                    if (Input.GetKeyDown(KeyCode.D))
+                    {
+                        newCol += 1;
+                        moveR = true;
+                    }
+                    if (Input.GetKeyDown(KeyCode.W))
+                    {
+                        newRow += 1;
+                        moveU = true;
+                    }
+                    if (Input.GetKeyDown(KeyCode.S))
+                    {
+                        newRow -= 1;
+                        moveD = true;
+                    }
                 }
-                if (moveU || moveD || moveL || moveR)
-                {
-                    canMove = false;
-                }
-                //}
             }
+
+            char t = GC.GetTerrain(newRow, newCol);
+            if (t == '-' || t == '=' || t == '<' || t == '>')
+            {
+                row = newRow;
+                col = newCol;
+                while (t == '=')
+                {
+                    if (moveL) newCol--;
+                    if (moveR) newCol++;
+                    if (moveU) newRow++;
+                    if (moveD) newRow--;
+                    t = GC.GetTerrain(newRow, newCol);
+                    if (t == '-' || t == '=' || t == '<' || t == '>')
+                    {
+                        row = newRow;
+                        col = newCol;
+                        transform.position = Vector3.MoveTowards(transform.position,
+                            new Vector3(col - GC.offset, row, 0), step);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                if (moveL) anim.SetTrigger("MoveLeft");
+                if (moveR) anim.SetTrigger("MoveRight");
+                if (moveU) anim.SetTrigger("MoveUp");
+                if (moveD) anim.SetTrigger("MoveDown");
+            }else{
+                audioSource.Play();
+            }
+
+            if (moveU || moveD || moveL || moveR)
+            {
+                canMove = false;
+            }
+
         }
+
         target = new Vector3(col - GC.offset, row, 0);
-            transform.position = Vector3.MoveTowards(transform.position, 
-                target, step);   
+        transform.position = Vector3.MoveTowards(transform.position, target, step);   
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
