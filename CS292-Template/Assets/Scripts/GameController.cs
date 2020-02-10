@@ -8,6 +8,7 @@ public class GameController : MonoBehaviour
 {
     public GameObject TerrainTileset;
     public GameObject ObjectTileset;
+    public GameObject AboveTileset;
 
     public GameObject TerrainLayers;
     public float landSpeed;
@@ -20,6 +21,7 @@ public class GameController : MonoBehaviour
     int top = 8;
     Tilemap terrain;
     Tilemap objects;
+    Tilemap above;
     public Tile GrassTile;
     public Tile RoadTile;
     public Tile TrackTile;
@@ -27,6 +29,8 @@ public class GameController : MonoBehaviour
     public Tile IceTile;
     public Tile SnowTile;
     public Tile BushTile;
+    public Tile TrunkTile;
+    public Tile TreetopTile;
     int genState; //Used for markov chains
     public bool running;
     public TrainGenController tgen;
@@ -51,12 +55,16 @@ public class GameController : MonoBehaviour
     {
         GameObject tlayers = Instantiate(TerrainLayers, new Vector3(0, 0, 0), Quaternion.identity).gameObject;
         Squirrel = Instantiate(Squirrel, new Vector3(3, 3, 0), Quaternion.identity).gameObject;
+        SquirrelController SC = Squirrel.GetComponent<SquirrelController>();
+        SC.Controller = gameObject;
 
         TerrainTileset = tlayers.transform.Find("TerrainGrid/TerrainMap").gameObject;
         ObjectTileset = tlayers.transform.Find("ObjectGrid/ObjectMap").gameObject;
+        AboveTileset = tlayers.transform.Find("AboveGrid/AboveMap").gameObject;
 
         terrain = TerrainTileset.GetComponent<Tilemap>();
         objects = ObjectTileset.GetComponent<Tilemap>();
+        above = AboveTileset.GetComponent<Tilemap>();
 
         T = new Dictionary<int, List<char>>();
         B = new Dictionary<int, List<char>>();
@@ -68,7 +76,7 @@ public class GameController : MonoBehaviour
         }
 
         //Based on starting tiles
-        int[] StartXs = new int[]{1, 2, 3, 4, 4, 5, 7, 8, 10, 11, 12};
+        int[] StartXs = new int[]{1, 2, 3, 4, 4, 5, 7, 8, 10, 10, 12};
         int[] StartYs = new int[]{2, 5, 1, 6, 0, 5, 6, 1, 0, 5, 4};
 
         for(int i = 0; i < StartXs.Length; i += 1){
@@ -84,8 +92,10 @@ public class GameController : MonoBehaviour
         if(running){
             TerrainTileset.transform.position = new Vector3(-1 * offset - 0.5f, TerrainTileset.transform.position.y, 0);// = TerrainTileset.transform.position + new Vector3(-1 * landSpeed * Time.deltaTime, 0, 0);
             ObjectTileset.transform.position = TerrainTileset.transform.position;
+            AboveTileset.transform.position = TerrainTileset.transform.position;
         }
     }
+
     void FixedUpdate()
     {
         if(running){
@@ -245,11 +255,15 @@ public class GameController : MonoBehaviour
                 T[front][i] = '-';
             }else{
                 T[front][i] = '#';
-                if(Random.Range(0, 2) == 0){
+                int r = Random.Range(0, 3);
+                if(r == 0){
                     objects.SetTile(new Vector3Int(front, i, 0), BushTile);
-                } else {
+                } else if (r == 1) {
                     objects.SetTile(new Vector3Int(front, i, 0), RockTile);
-                }  
+                } else {
+                    objects.SetTile(new Vector3Int(front, i, 0), TrunkTile);
+                    above.SetTile(new Vector3Int(front, i + 1, 0), TreetopTile);
+                }
             }
         }
     }

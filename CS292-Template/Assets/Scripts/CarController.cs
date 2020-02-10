@@ -48,6 +48,7 @@ public class CarController : MonoBehaviour
             Destroy(gameObject);
         }
 
+        
         float dist = Vector3.Distance(squirrel.transform.position, transform.position);
         if(passed == false && dist < 4){
             passed = true;

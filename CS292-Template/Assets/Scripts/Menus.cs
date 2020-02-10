@@ -10,7 +10,7 @@ public class Menus : MonoBehaviour
 
     void Start()
     {
-        titleScreen();
+        //titleScreen();
     }
 
     void Update()
@@ -24,52 +24,55 @@ public class Menus : MonoBehaviour
     }
 
     void game() {
-        title.SetActive(false);
-        settings.SetActive(false);
-        credits.SetActive(false);
-        gameplay.SetActive(true);
-        gameUI.SetActive(true);
-        GameOver.SetActive(false);
+        //print("game");
+        //title.SetActive(false);
+        //settings.SetActive(false);
+        //credits.SetActive(false);
+        //gameplay.SetActive(true);
+        //gameUI.SetActive(true);
+        //GameOver.SetActive(false);
 
     }
 
     void titleScreen() {
-        title.SetActive(true);
-        settings.SetActive(false);
-        credits.SetActive(false);
-        gameplay.SetActive(false);
-        gameUI.SetActive(false);
-        GameOver.SetActive(false);
+        //print("titlescreen");
+        //title.SetActive(true);
+        //settings.SetActive(false);
+        //credits.SetActive(false);
+        //gameplay.SetActive(false);
+        //gameUI.SetActive(false);
+        //GameOver.SetActive(false);
     }
 
     void settingsScreen() {
-        title.SetActive(false);
-        settings.SetActive(true);
-        credits.SetActive(false);
-        gameplay.SetActive(false);
-        gameUI.SetActive(false);
-        GameOver.SetActive(false);
+        //print("settings");
+        //title.SetActive(false);
+        //settings.SetActive(true);
+        //credits.SetActive(false);
+        //gameplay.SetActive(false);
+        //gameUI.SetActive(false);
+        //GameOver.SetActive(false);
 
     }
 
     void creditsScreen() {
-        title.SetActive(false);
-        settings.SetActive(false);
-        credits.SetActive(true);
-        gameplay.SetActive(false);
-        gameUI.SetActive(false);
-        GameOver.SetActive(false);
+        //print("credits");
+        //title.SetActive(false);
+        //settings.SetActive(false);
+        //credits.SetActive(true);
+        //gameplay.SetActive(false);
+        //gameUI.SetActive(false);
+        //GameOver.SetActive(false);
     }
 
     void gameover() {
-        
-
-        title.SetActive(false);
-        settings.SetActive(false);
-        credits.SetActive(false);
-        gameplay.SetActive(true);
-        gameUI.SetActive(true);
-        GameOver.SetActive(true);
+        //print("gameover");
+        //title.SetActive(false);
+        //settings.SetActive(false);
+        //credits.SetActive(false);
+        //gameplay.SetActive(true);
+        //gameUI.SetActive(true);
+        //GameOver.SetActive(true);
     }
 
 

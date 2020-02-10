@@ -164,6 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2a81d367594f65468808819d2be9e24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameController: {fileID: 0}
 --- !u!1 &7941421075469206517
 GameObject:
   m_ObjectHideFlags: 0
@@ -174,7 +175,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7941421075469206514}
   - component: {fileID: 7941421075469206515}
-  - component: {fileID: 7941421075469206516}
   m_Layer: 5
   m_Name: Heart1
   m_TagString: Untagged
@@ -250,22 +250,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7941421075469206516
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7941421075469206517}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80fdd428780f5b144aca485f25381e21, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  heart1: {fileID: 7941421075469206517}
-  heart2: {fileID: 7941421077300070501}
-  heart3: {fileID: 7941421076596928407}
-  health: 0
 --- !u!1 &7941421076273897912
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,7 +269,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7941421076273897908
 RectTransform:
   m_ObjectHideFlags: 0
@@ -395,7 +379,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7941421076596928406}
   - component: {fileID: 7941421076596928404}
-  - component: {fileID: 7941421076596928405}
   m_Layer: 5
   m_Name: Heart3
   m_TagString: Untagged
@@ -471,22 +454,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7941421076596928405
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7941421076596928407}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80fdd428780f5b144aca485f25381e21, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  heart1: {fileID: 7941421075469206517}
-  heart2: {fileID: 7941421077300070501}
-  heart3: {fileID: 7941421076596928407}
-  health: 0
 --- !u!1 &7941421076831925836
 GameObject:
   m_ObjectHideFlags: 0
@@ -531,7 +498,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7941421077300070498}
   - component: {fileID: 7941421077300070499}
-  - component: {fileID: 7941421077300070500}
   m_Layer: 5
   m_Name: Heart2
   m_TagString: Untagged
@@ -607,19 +573,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7941421077300070500
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7941421077300070501}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80fdd428780f5b144aca485f25381e21, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  heart1: {fileID: 7941421075469206517}
-  heart2: {fileID: 7941421077300070501}
-  heart3: {fileID: 7941421076596928407}
-  health: 0

@@ -5,7 +5,7 @@ using UnityEngine;
 public class SquirrelController : MonoBehaviour
 {
 
-    GameObject Controller;
+    public GameObject Controller;
     GameController GC;
     Vector3 target;
     Animator anim;
@@ -24,7 +24,7 @@ public class SquirrelController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Controller = GameObject.Find("GameController");
+        //Controller = GameObject.Find("/Everything/GameController");
         GC = Controller.GetComponent<GameController>();
         audioSource = gameObject.GetComponent<AudioSource>();
         anim = GetComponent<Animator>();
@@ -157,7 +157,6 @@ public class SquirrelController : MonoBehaviour
                     anim.SetTrigger("MoveDown");
                 }
             }else{
-                print("bump");
                 audioSource.Play();
             }
 
@@ -179,7 +178,6 @@ public class SquirrelController : MonoBehaviour
     public void ChangeHealth(int change)
     {
         health += change;
-        print(health);
         if(health == 0)
         {
             anim.SetTrigger("IsDead");
@@ -201,13 +199,8 @@ public class SquirrelController : MonoBehaviour
                 }
                 i++;
             }
-            GameObject other = Instantiate(squirrel, new Vector3(transform.position.x + i,
-                transform.position.y, 0), Quaternion.identity).gameObject;
-            SquirrelController s = other.GetComponent<SquirrelController>();
-            s.col = col + i;
-            s.row = row;
-            s.health = health;
-            Destroy(gameObject);
+            transform.position = new Vector3(transform.position.x + i, transform.position.y, 0);
+            col = col + i;
         }
     }
 

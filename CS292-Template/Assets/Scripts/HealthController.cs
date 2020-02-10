@@ -5,6 +5,7 @@ using UnityEngine;
 public class HealthController : MonoBehaviour
 {
 
+    public GameController gameController;
     public GameObject heart1, heart2, heart3;
     public int health;
 
@@ -30,8 +31,14 @@ public class HealthController : MonoBehaviour
             heart3.SetActive(true);
         }
         else */
-        GameObject thePlayer = GameObject.Find("SquirrelController");
-        SquirrelController squirrel = thePlayer.GetComponent<SquirrelController>();
+        //GameObject thePlayer = GameObject.Find("SquirrelController");
+        //if(thePlayer == null) return;
+        SquirrelController squirrel = gameController.Squirrel.GetComponent<SquirrelController>();
+        if(squirrel == null) return;    
+        
+
+        health = squirrel.health;
+        //print(health);
 
         if (health == 3)
         {
@@ -63,6 +70,5 @@ public class HealthController : MonoBehaviour
         {
             health -= 1;
         }
-
     }
 }
