@@ -46,5 +46,8 @@ MonoBehaviour:
   cooldown: 100
   trainPrefab: {fileID: 5711343636529605320, guid: a4a0ba1fb58141f4a8583b3b2b5dcdaf,
     type: 3}
-  parentObj: {fileID: 0}
+  smokePrefab: {fileID: 2508682925955896008, guid: af9090f0e7a5677439ef4c831d272e4a,
+    type: 3}
   parent: {fileID: 0}
+  squirrel: {fileID: 0}
+  direction: 0

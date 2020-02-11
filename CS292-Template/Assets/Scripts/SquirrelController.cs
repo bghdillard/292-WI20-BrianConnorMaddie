@@ -122,8 +122,11 @@ public class SquirrelController : MonoBehaviour
             {
                 row = newRow;
                 col = newCol;
-                while (t == '=')
+                bool hitStop = false;
+                int test = 0;
+                while (t == '=' && hitStop == false && test < 6)
                 {
+                    test += 1;
                     if (moveL) newCol--;
                     if (moveR) newCol++;
                     if (moveU) newRow++;
@@ -138,7 +141,7 @@ public class SquirrelController : MonoBehaviour
                     }
                     else
                     {
-                        break;
+                        hitStop = true;
                     }
                 }
                 if (moveL) anim.SetTrigger("MoveLeft");

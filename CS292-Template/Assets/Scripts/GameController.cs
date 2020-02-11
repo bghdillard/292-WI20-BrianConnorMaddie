@@ -6,14 +6,17 @@ using System.Linq;
 
 public class GameController : MonoBehaviour
 {
-    public GameObject TerrainTileset;
-    public GameObject ObjectTileset;
-    public GameObject AboveTileset;
+    public GameObject terrainObject;
+    GameObject tlayers;
+    GameObject TerrainTileset;
+    GameObject ObjectTileset;
+    GameObject AboveTileset;
 
     public GameObject TerrainLayers;
     public float landSpeed;
 
     public GameObject Squirrel;
+    public SquirrelController squirrelController;
 
     public float offset; //How far has camera(terrain) moved
     int front = 13; //Used for determine new layer placement
@@ -33,6 +36,7 @@ public class GameController : MonoBehaviour
     public Tile TreetopTile;
     int genState; //Used for markov chains
     public bool running;
+    public int scoreVal = 0;
     public TrainGenController tgen;
     public CarGenController cgen;
     System.Random rnd = new System.Random();
@@ -44,6 +48,8 @@ public class GameController : MonoBehaviour
     //= = Ice
     //X = Lethal?
 
+    
+
     public char GetTerrain(int row, int col){ //Brian - Use this for movement
         if(row < 0) return '|';
         if(row >= 7) return '|';   
@@ -53,11 +59,13 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        GameObject tlayers = Instantiate(TerrainLayers, new Vector3(0, 0, 0), Quaternion.identity).gameObject;
+        tlayers = Instantiate(TerrainLayers, new Vector3(0, 0, 0), Quaternion.identity).gameObject;
         Squirrel = Instantiate(Squirrel, new Vector3(3, 3, 0), Quaternion.identity).gameObject;
-        SquirrelController SC = Squirrel.GetComponent<SquirrelController>();
-        SC.Controller = gameObject;
+        squirrelController = Squirrel.GetComponent<SquirrelController>();
+        squirrelController.Controller = gameObject;
 
+        terrainObject = transform.Find("Terrain").gameObject;
+        tlayers.transform.parent = terrainObject.transform;
         TerrainTileset = tlayers.transform.Find("TerrainGrid/TerrainMap").gameObject;
         ObjectTileset = tlayers.transform.Find("ObjectGrid/ObjectMap").gameObject;
         AboveTileset = tlayers.transform.Find("AboveGrid/AboveMap").gameObject;
@@ -90,9 +98,10 @@ public class GameController : MonoBehaviour
 
     void Update(){
         if(running){
-            TerrainTileset.transform.position = new Vector3(-1 * offset - 0.5f, TerrainTileset.transform.position.y, 0);// = TerrainTileset.transform.position + new Vector3(-1 * landSpeed * Time.deltaTime, 0, 0);
-            ObjectTileset.transform.position = TerrainTileset.transform.position;
-            AboveTileset.transform.position = TerrainTileset.transform.position;
+            terrainObject.transform.position = new Vector3(-1 * offset - 0.5f, terrainObject.transform.position.y, 0);
+            //TerrainTileset.transform.position = new Vector3(-1 * offset - 0.5f, TerrainTileset.transform.position.y, 0);// = TerrainTileset.transform.position + new Vector3(-1 * landSpeed * Time.deltaTime, 0, 0);
+            //ObjectTileset.transform.position = TerrainTileset.transform.position;
+            //AboveTileset.transform.position = TerrainTileset.transform.position;
         }
     }
 
@@ -107,6 +116,26 @@ public class GameController : MonoBehaviour
                 MakeNewLayer();
             }
         }
+
+        if(Time.time>=nextUpdate){
+             nextUpdate=Mathf.FloorToInt(Time.time)+1;
+             UpdateEverySecond();
+         }
+    }
+
+    private int nextUpdate=1;
+    void UpdateEverySecond(){
+        if(squirrelController.isDead() == false){
+            scoreVal += squirrelController.col * 10;
+        }
+    }
+
+    void PauseGame(){
+        running = false;
+    }
+
+    void UnpauseGame(){
+        running = true;
     }
 
     void LayerSetup(){
@@ -121,6 +150,7 @@ public class GameController : MonoBehaviour
         for(int i = bot; i < top; i+=1){
             terrain.SetTile(new Vector3Int(front - 25, i, 0), null);
             objects.SetTile(new Vector3Int(front - 25, i, 0), null);
+            above.SetTile(new Vector3Int(front - 25, i, 0), null);
         }
     }
 
@@ -207,6 +237,7 @@ public class GameController : MonoBehaviour
             tg = Instantiate(cgen, new Vector3(front - offset, 12, 0), Quaternion.identity);
             tg.direction = -1;
         }
+        tg.transform.parent = terrainObject.transform;
         tg.parent = this;
         tg.squirrel = Squirrel;
     }
@@ -230,6 +261,7 @@ public class GameController : MonoBehaviour
             tg = Instantiate(tgen, new Vector3(front - offset, 12, 0), Quaternion.identity);
             tg.direction = -1;
         }
+        tg.transform.parent = terrainObject.transform;
         tg.parent = this;
         tg.squirrel = Squirrel;
     }
@@ -307,6 +339,9 @@ public class GameController : MonoBehaviour
         int r = Random.Range(0, choices.Length);
         return choices[r];
     }
+
+    
+
 }
 
 
