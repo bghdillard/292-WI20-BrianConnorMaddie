@@ -33,6 +33,7 @@ public class HealthController : MonoBehaviour
         else */
         //GameObject thePlayer = GameObject.Find("SquirrelController");
         //if(thePlayer == null) return;
+        if(gameController.Squirrel == null) return;
         SquirrelController squirrel = gameController.Squirrel.GetComponent<SquirrelController>();
         if(squirrel == null) return;    
         

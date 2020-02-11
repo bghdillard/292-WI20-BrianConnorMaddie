@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour
     GameObject ObjectTileset;
     GameObject AboveTileset;
 
+    public GameObject TerrainPrefab;
     public GameObject TerrainLayers;
     public float landSpeed;
 
@@ -59,13 +60,25 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
+        SetupGame();
+    }
+
+    void SetupGame(){
+        offset = 0;
+        scoreVal = 0;
+        front = 13;
+
+        terrainObject = Instantiate(TerrainPrefab, new Vector3(0, 0, 0), Quaternion.identity).gameObject;
+        terrainObject.transform.position = new Vector3(-1 * offset, terrainObject.transform.position.y, 0);
+        terrainObject.transform.parent = transform;
+
         tlayers = Instantiate(TerrainLayers, new Vector3(0, 0, 0), Quaternion.identity).gameObject;
+        tlayers.transform.parent = terrainObject.transform;
+
         Squirrel = Instantiate(Squirrel, new Vector3(3, 3, 0), Quaternion.identity).gameObject;
         squirrelController = Squirrel.GetComponent<SquirrelController>();
         squirrelController.Controller = gameObject;
-
-        terrainObject = transform.Find("Terrain").gameObject;
-        tlayers.transform.parent = terrainObject.transform;
+        
         TerrainTileset = tlayers.transform.Find("TerrainGrid/TerrainMap").gameObject;
         ObjectTileset = tlayers.transform.Find("ObjectGrid/ObjectMap").gameObject;
         AboveTileset = tlayers.transform.Find("AboveGrid/AboveMap").gameObject;
@@ -93,16 +106,27 @@ public class GameController : MonoBehaviour
         }
 
         genState = rc(new int[]{1, 2, 3});
-        running = true;
+        running = false;
+        
+    }
+
+    void ResetGame(){
+        running = false;
+        Destroy(Squirrel);
+        Destroy(terrainObject);
+        
+        SetupGame();
     }
 
     void Update(){
-        if(running){
-            terrainObject.transform.position = new Vector3(-1 * offset - 0.5f, terrainObject.transform.position.y, 0);
+        if(terrainObject == null) return;
+        terrainObject.transform.position = new Vector3(-1 * offset - 0.5f, terrainObject.transform.position.y, 0);
+        //if(running){
+            
             //TerrainTileset.transform.position = new Vector3(-1 * offset - 0.5f, TerrainTileset.transform.position.y, 0);// = TerrainTileset.transform.position + new Vector3(-1 * landSpeed * Time.deltaTime, 0, 0);
             //ObjectTileset.transform.position = TerrainTileset.transform.position;
             //AboveTileset.transform.position = TerrainTileset.transform.position;
-        }
+        //}
     }
 
     void FixedUpdate()
@@ -115,12 +139,18 @@ public class GameController : MonoBehaviour
             if(offset + 24 > front){
                 MakeNewLayer();
             }
+
+            if(offset > 10){
+                ResetGame();
+            }
         }
 
-        if(Time.time>=nextUpdate){
+        if(Time.time >= nextUpdate && running){
              nextUpdate=Mathf.FloorToInt(Time.time)+1;
              UpdateEverySecond();
-         }
+        }
+
+        
     }
 
     private int nextUpdate=1;

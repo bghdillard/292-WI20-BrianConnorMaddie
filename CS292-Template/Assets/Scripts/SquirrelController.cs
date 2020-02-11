@@ -41,6 +41,8 @@ public class SquirrelController : MonoBehaviour
         bottom = new Rect(150, 0, 300, 150);
         left = new Rect(0, 0, 150, 400);
         right = new Rect(450, 0, 200, 600);
+
+        print("Making Squirrel");
     }
 
     // Update is called once per frame
@@ -118,39 +120,43 @@ public class SquirrelController : MonoBehaviour
             }
 
             char t = GC.GetTerrain(newRow, newCol);
-            if (t == '-' || t == '=' || t == '<' || t == '>')
-            {
-                row = newRow;
-                col = newCol;
-                bool hitStop = false;
-                int test = 0;
-                while (t == '=' && hitStop == false && test < 6)
+            if(moveL || moveR || moveU || moveD){
+                if (t == '-' || t == '=' || t == '<' || t == '>')
                 {
-                    test += 1;
-                    if (moveL) newCol--;
-                    if (moveR) newCol++;
-                    if (moveU) newRow++;
-                    if (moveD) newRow--;
-                    t = GC.GetTerrain(newRow, newCol);
-                    if (t == '-' || t == '=' || t == '<' || t == '>')
+                    row = newRow;
+                    col = newCol;
+                    bool hitStop = false;
+                    int test = 0;
+                    while (t == '=' && hitStop == false && test < 6)
                     {
-                        row = newRow;
-                        col = newCol;
-                        transform.position = Vector3.MoveTowards(transform.position,
-                            new Vector3(col - GC.offset, row, 0), step);
+                        test += 1;
+                        if (moveL) newCol--;
+                        if (moveR) newCol++;
+                        if (moveU) newRow++;
+                        if (moveD) newRow--;
+                        t = GC.GetTerrain(newRow, newCol);
+                        if (t == '-' || t == '=' || t == '<' || t == '>')
+                        {
+                            row = newRow;
+                            col = newCol;
+                            transform.position = Vector3.MoveTowards(transform.position,
+                                new Vector3(col - GC.offset, row, 0), step);
+                        }
+                        else
+                        {
+                            hitStop = true;
+                        }
                     }
-                    else
-                    {
-                        hitStop = true;
-                    }
+                    if (moveL) anim.SetTrigger("MoveLeft");
+                    if (moveR) anim.SetTrigger("MoveRight");
+                    if (moveU) anim.SetTrigger("MoveUp");
+                    if (moveD) anim.SetTrigger("MoveDown");
+                    if(GC.running == false) GC.running = true;
+                }else{
+                    audioSource.Play();
                 }
-                if (moveL) anim.SetTrigger("MoveLeft");
-                if (moveR) anim.SetTrigger("MoveRight");
-                if (moveU) anim.SetTrigger("MoveUp");
-                if (moveD) anim.SetTrigger("MoveDown");
-            }else{
-                audioSource.Play();
             }
+            
 
             if (moveU || moveD || moveL || moveR)
             {
