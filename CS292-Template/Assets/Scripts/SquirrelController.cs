@@ -10,7 +10,6 @@ public class SquirrelController : MonoBehaviour
     Vector3 target;
     Animator anim;
     Rigidbody2D body;
-    public GameObject squirrel;
 
     public float speed = 1.0f;
     public int row;

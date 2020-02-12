@@ -48,7 +48,7 @@ public class GameController : MonoBehaviour
     //# = Blocking
     //= = Ice
     //X = Lethal?
-
+    int difficulty;
     
 
     public char GetTerrain(int row, int col){ //Brian - Use this for movement
@@ -67,6 +67,7 @@ public class GameController : MonoBehaviour
         offset = 0;
         scoreVal = 0;
         front = 13;
+        difficulty = 0;
 
         terrainObject = Instantiate(TerrainPrefab, new Vector3(0, 0, 0), Quaternion.identity).gameObject;
         terrainObject.transform.position = new Vector3(-1 * offset, terrainObject.transform.position.y, 0);
@@ -136,13 +137,21 @@ public class GameController : MonoBehaviour
             landSpeed += ((1 / (float)(front + 20)) * Time.deltaTime); //Acceleration Function integrates to Log
 
             offset += landSpeed * Time.deltaTime;
+            if(offset > 15 && difficulty == 0){
+                print("Medium");
+                difficulty = 1;
+            }
+            if(offset > 30 && difficulty == 1){
+                print("Hard");
+                difficulty = 2;
+            } 
             if(offset + 24 > front){
                 MakeNewLayer();
             }
 
-            if(offset > 10){
-                ResetGame();
-            }
+            //if(offset > 10){
+            //    ResetGame();
+            //}
         }
 
         if(Time.time >= nextUpdate && running){
@@ -212,36 +221,49 @@ public class GameController : MonoBehaviour
         LayerSetup();
         MakePassable();
 
-        int r = Random.Range(0, 24);
-        if(genState == 20 || genState == 21 || genState == 22 || genState == 23 || genState == 24){ //End of Passable
+        int r = 0;// = Random.Range(0, 24);
+        if(genState == 20 || genState == 21 || genState == 22 || genState == 23 || genState == 24 || genState == 25 || genState == 26){ //End of Passable
             int dir;
             if(genState == 20){
-                dir = rc(new int[]{1, -2});
-            }else if(genState == 22 || genState == 23){
+                dir = rc(new int[]{1, -1});
+            }else if(genState == 22 || genState == 24 || genState == 26){
                 dir = 1;
             }else {
                 dir = -1;
             }
 
-            if(r % 2 == 0){
+            if(difficulty == 0) r = rc(new int[]{0, 0, 0, 0});
+            if(difficulty == 1) r = rc(new int[]{0, 0, 0, 1});
+            if(difficulty == 2) r = rc(new int[]{0, 0, 1, 1});
+            if(r == 1){
                 MakeRoad(dir);
             } else {
                 MakeTracks(dir);
             }
 
-            if(genState == 20 || genState == 21 || genState == 23){
-                genState = rc(new int[]{2, 3, 12, 13});
+            if(genState == 20 || genState == 21 || genState == 24){
+                if(difficulty == 0) genState = rc(new int[]{4, 3, 14, 13});
+                if(difficulty == 1) genState = rc(new int[]{4, 3, 2, 14, 13, 12});
+                if(difficulty == 2) genState = rc(new int[]{3, 2, 13, 12});
             } else {
                 genState -= 1;
             }
-        } else if(genState == 3 || genState == 2 || genState == 1){ //More Passable
+        } else if(genState == 5 || genState == 4 || genState == 3 || genState == 2 || genState == 1){ //More Passable
             MakeRocks();
             genState -= 1;
-            if(genState == 0) genState = rc(new int[]{20, 20, 22, 24});
-        }else if(genState == 13 || genState == 12 || genState == 11){ //More Ice Field
+            if(genState == 0){
+                if(difficulty == 0) genState = rc(new int[]{20, 20, 22, 24});
+                if(difficulty == 1) genState = rc(new int[]{20, 20, 22, 24});
+                if(difficulty == 2) genState = rc(new int[]{20, 20, 22, 24});
+            }
+        }else if(genState == 15 || genState == 14 || genState == 13 || genState == 12 || genState == 11){ //More Ice Field
             MakeIceField();
             genState -= 1;
-            if(genState == 10) genState = rc(new int[]{20, 20, 22, 24});
+            if(genState == 10){
+                if(difficulty == 0) genState = rc(new int[]{20});
+                if(difficulty == 1) genState = rc(new int[]{20, 20, 20, 20, 22, 24});
+                if(difficulty == 2) genState = rc(new int[]{20, 20, 22, 24});
+            }
         }
 
         UpdateBlocking();
@@ -308,12 +330,17 @@ public class GameController : MonoBehaviour
     }
 
     void MakeRocks(){
-        List<int> paths = Enumerable.Range(0, 7).Where(i => B[front - 1][i] == '-').ToList();
-        int path = rc(paths.OrderBy(x => rnd.Next()).ToArray());
-        List<int> rocks = Enumerable.Range(0, 7).OrderBy(x => rnd.Next()).Take(4).ToList();
+        List<int> open = Enumerable.Range(0, 7).Where(i => B[front - 1][i] == '-').ToList();
+        List<int> paths = new List<int>();
+        if(difficulty == 0) paths = open.OrderBy(x => rnd.Next()).Take(2).ToList();
+        if(difficulty > 0) paths = open.OrderBy(x => rnd.Next()).Take(1).ToList();
+        List<int> rocks = new List<int>();
+        if(difficulty == 0) rocks = Enumerable.Range(0, 7).OrderBy(x => rnd.Next()).Take(2).ToList();
+        if(difficulty == 1) rocks = Enumerable.Range(0, 7).OrderBy(x => rnd.Next()).Take(3).ToList();
+        if(difficulty > 1) rocks = Enumerable.Range(0, 7).OrderBy(x => rnd.Next()).Take(4).ToList();
 
         for(int i = 0; i < 7; i += 1){
-            if(path == i || !rocks.Contains(i)){
+            if(paths.Contains(i) || !rocks.Contains(i)){
                 T[front][i] = '-';
             }else{
                 T[front][i] = '#';
@@ -331,13 +358,21 @@ public class GameController : MonoBehaviour
     }
 
     void MakeIceField(){
-        List<int> paths = Enumerable.Range(0, 7).Where(i => B[front - 1][i] == '-').ToList();
-        int path = rc(paths.OrderBy(x => rnd.Next()).ToArray());
-        List<int> rocks = Enumerable.Range(0, 7).OrderBy(x => rnd.Next()).Take(3).ToList();
-        List<int> patches = Enumerable.Range(0, 7).OrderBy(x => rnd.Next()).Take(4).ToList();
+        List<int> open = Enumerable.Range(0, 7).Where(i => B[front - 1][i] == '-').ToList();
+        List<int> paths = new List<int>();;
+        if(difficulty == 0) paths = open.OrderBy(x => rnd.Next()).Take(2).ToList();
+        if(difficulty > 0) paths = open.OrderBy(x => rnd.Next()).Take(1).ToList();
+        List<int> rocks = new List<int>();;
+        List<int> patches = new List<int>();;
+        if(difficulty == 0) rocks = Enumerable.Range(0, 7).OrderBy(x => rnd.Next()).Take(1).ToList();
+        if(difficulty == 1) rocks = Enumerable.Range(0, 7).OrderBy(x => rnd.Next()).Take(2).ToList();
+        if(difficulty == 2) rocks = Enumerable.Range(0, 7).OrderBy(x => rnd.Next()).Take(3).ToList();
+        if(difficulty == 0) patches = Enumerable.Range(0, 7).OrderBy(x => rnd.Next()).Take(2).ToList();
+        if(difficulty == 1) patches = Enumerable.Range(0, 7).OrderBy(x => rnd.Next()).Take(3).ToList();
+        if(difficulty == 2) patches = Enumerable.Range(0, 7).OrderBy(x => rnd.Next()).Take(4).ToList();
 
         for(int i = 0; i < 7; i += 1){
-            if(path == i || (!rocks.Contains(i) && !patches.Contains(i))){
+            if(paths.Contains(i) || (!rocks.Contains(i) && !patches.Contains(i))){
                 T[front][i] = '-';
             }else if(patches.Contains(i)){
                 T[front][i] = '=';
