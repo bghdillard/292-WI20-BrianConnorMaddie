@@ -170,7 +170,15 @@ public class SquirrelController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        ChangeHealth(-1);
+        //print(collision.gameObject.layer);
+        if(collision.gameObject.layer == 11){
+            CollectibleController cc = collision.gameObject.GetComponent<CollectibleController>();
+            GC.scoreVal += 100 * (int)(GC.offset);
+            Destroy(collision.gameObject);
+        }else{
+            ChangeHealth(-1);
+        }
+        
     }
 
     public void ChangeHealth(int change)

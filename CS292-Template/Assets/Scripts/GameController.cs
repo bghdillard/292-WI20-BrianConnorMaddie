@@ -36,6 +36,7 @@ public class GameController : MonoBehaviour
     public Tile BushTile;
     public Tile TrunkTile;
     public Tile TreetopTile;
+    public GameObject CollectiblePrefab;
     int genState; //Used for markov chains
     public bool running;
     public int scoreVal = 0;
@@ -50,6 +51,7 @@ public class GameController : MonoBehaviour
     //= = Ice
     //X = Lethal?
     int difficulty;
+    int nextCollectible;
     
 
     void ResetGame(){ //Maddie - Use this to reset Game
@@ -78,6 +80,7 @@ public class GameController : MonoBehaviour
         scoreVal = 0;
         front = 13;
         difficulty = 0;
+        nextCollectible = 2;
         
         terrainObject = Instantiate(TerrainPrefab, new Vector3(0, 0, 0), Quaternion.identity).gameObject;
         terrainObject.transform.position = new Vector3(-1 * offset, terrainObject.transform.position.y, 0);
@@ -89,6 +92,7 @@ public class GameController : MonoBehaviour
         Squirrel = Instantiate(SquirrelPrefab, new Vector3(3, 3, 0), Quaternion.identity).gameObject;
         squirrelController = Squirrel.GetComponent<SquirrelController>();
         squirrelController.Controller = gameObject;
+
         
         TerrainTileset = tlayers.transform.Find("TerrainGrid/TerrainMap").gameObject;
         ObjectTileset = tlayers.transform.Find("ObjectGrid/ObjectMap").gameObject;
@@ -141,11 +145,11 @@ public class GameController : MonoBehaviour
             landSpeed += ((1 / (float)(front + 20)) * Time.deltaTime); //Acceleration Function integrates to Log
 
             offset += landSpeed * Time.deltaTime;
-            if(offset > 15 && difficulty == 0){
+            if(offset > 10 && difficulty == 0){
                 print("Medium");
                 difficulty = 1;
             }
-            if(offset > 30 && difficulty == 1){
+            if(offset > 40 && difficulty == 1){
                 print("Hard");
                 difficulty = 2;
             } 
@@ -261,19 +265,39 @@ public class GameController : MonoBehaviour
             genState -= 1;
             if(genState == 10){
                 if(difficulty == 0) genState = rc(new int[]{20});
-                if(difficulty == 1) genState = rc(new int[]{20, 20, 20, 20, 22, 24});
-                if(difficulty == 2) genState = rc(new int[]{20, 20, 22, 24});
+                if(difficulty == 1) genState = rc(new int[]{20, 20, 22, 24});
+                if(difficulty == 2) genState = rc(new int[]{22, 23, 25, 26});
             }
         }
 
         UpdateBlocking();
+
+        MakeCollectibles();
+
         front += 1;
+    }
+
+    void MakeCollectibles(){
+        if(nextCollectible != 0){
+            nextCollectible -= 1;
+            return;
+        }
+        List<int> open = Enumerable.Range(0, 7).Where(i => B[front][i] == '-').ToList();
+        if(open.Count > 0){
+            int pos = rc(open.ToArray());
+
+            GameObject Collectible = Instantiate(CollectiblePrefab, new Vector3(front - offset, pos, 0), Quaternion.identity).gameObject;
+            CollectibleController collectibleController = Collectible.GetComponent<CollectibleController>();
+            Collectible.transform.parent = terrainObject.transform;
+            collectibleController.parent = this;
+            
+            nextCollectible = 2;
+        }
     }
 
     void MakeRoad(int dir){
         for(int i = bot; i < top; i+=1){
             terrain.SetTile(new Vector3Int(front, i, 0), RoadTile);
-            
         }
 
         for(int i = 0; i < 7; i += 1){
@@ -342,6 +366,8 @@ public class GameController : MonoBehaviour
         for(int i = 0; i < 7; i += 1){
             if(paths.Contains(i) || !rocks.Contains(i)){
                 T[front][i] = '-';
+
+                
             }else{
                 T[front][i] = '#';
                 int r = Random.Range(0, 3);

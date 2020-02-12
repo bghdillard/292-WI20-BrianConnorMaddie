@@ -249,6 +249,12 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6671965023350048274, guid: dc5ef48ce26a7684d977f3eea9bfd962,
+        type: 3}
+      propertyPath: CollectiblePrefab
+      value: 
+      objectReference: {fileID: 329657623806498755, guid: f63bad6640772f949bc9d31eff2ff536,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc5ef48ce26a7684d977f3eea9bfd962, type: 3}
 --- !u!1001 &609558346
@@ -1070,6 +1076,11 @@ PrefabInstance:
       propertyPath: gameplay
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3137644078596954916, guid: fd4876a920ec2644db5c5676e2f355e8,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -1.0500011
+      objectReference: {fileID: 0}
     - target: {fileID: 3174726733273200299, guid: fd4876a920ec2644db5c5676e2f355e8,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1080,6 +1091,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 57293728}
+    - target: {fileID: 4090907331609620809, guid: fd4876a920ec2644db5c5676e2f355e8,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -1.0500011
+      objectReference: {fileID: 0}
     - target: {fileID: 4675090089137106543, guid: fd4876a920ec2644db5c5676e2f355e8,
         type: 3}
       propertyPath: m_LocalPosition.x
