@@ -17,6 +17,7 @@ public class GameController : MonoBehaviour
     public float landSpeed;
 
     public GameObject Squirrel;
+    public GameObject SquirrelPrefab;
     public SquirrelController squirrelController;
 
     public float offset; //How far has camera(terrain) moved
@@ -51,6 +52,15 @@ public class GameController : MonoBehaviour
     int difficulty;
     
 
+    void ResetGame(){ //Maddie - Use this to reset Game
+        running = false;
+        DestroyImmediate(Squirrel);
+        DestroyImmediate(terrainObject);
+        DestroyImmediate(tlayers);
+
+        SetupGame();
+    }
+
     public char GetTerrain(int row, int col){ //Brian - Use this for movement
         if(row < 0) return '|';
         if(row >= 7) return '|';   
@@ -68,15 +78,15 @@ public class GameController : MonoBehaviour
         scoreVal = 0;
         front = 13;
         difficulty = 0;
-
+        
         terrainObject = Instantiate(TerrainPrefab, new Vector3(0, 0, 0), Quaternion.identity).gameObject;
         terrainObject.transform.position = new Vector3(-1 * offset, terrainObject.transform.position.y, 0);
         terrainObject.transform.parent = transform;
 
         tlayers = Instantiate(TerrainLayers, new Vector3(0, 0, 0), Quaternion.identity).gameObject;
         tlayers.transform.parent = terrainObject.transform;
-
-        Squirrel = Instantiate(Squirrel, new Vector3(3, 3, 0), Quaternion.identity).gameObject;
+            
+        Squirrel = Instantiate(SquirrelPrefab, new Vector3(3, 3, 0), Quaternion.identity).gameObject;
         squirrelController = Squirrel.GetComponent<SquirrelController>();
         squirrelController.Controller = gameObject;
         
@@ -111,13 +121,7 @@ public class GameController : MonoBehaviour
         
     }
 
-    void ResetGame(){
-        running = false;
-        Destroy(Squirrel);
-        Destroy(terrainObject);
-        
-        SetupGame();
-    }
+    
 
     void Update(){
         if(terrainObject == null) return;
@@ -148,10 +152,6 @@ public class GameController : MonoBehaviour
             if(offset + 24 > front){
                 MakeNewLayer();
             }
-
-            //if(offset > 10){
-            //    ResetGame();
-            //}
         }
 
         if(Time.time >= nextUpdate && running){

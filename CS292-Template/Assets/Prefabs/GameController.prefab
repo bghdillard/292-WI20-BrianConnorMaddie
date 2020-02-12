@@ -44,14 +44,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c3e87bef14baa4790b30a7443ca1ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TerrainTileset: {fileID: 0}
-  ObjectTileset: {fileID: 0}
-  AboveTileset: {fileID: 0}
+  terrainObject: {fileID: 0}
+  TerrainPrefab: {fileID: 0}
   TerrainLayers: {fileID: 4126827122018522674, guid: a80c57b22a3447b4990d647942bda9fc,
     type: 3}
   landSpeed: 0.8
-  Squirrel: {fileID: 9079002216964490105, guid: b89e186b732b2dc44a66e634cf35fa75,
+  Squirrel: {fileID: 0}
+  SquirrelPrefab: {fileID: 9079002216964490105, guid: b89e186b732b2dc44a66e634cf35fa75,
     type: 3}
+  squirrelController: {fileID: 0}
   offset: 0
   GrassTile: {fileID: 11400000, guid: 21ee9c18177d6ef4b87103539131a6bf, type: 2}
   RoadTile: {fileID: 11400000, guid: 63008592a37b0ad419a1efdbdef1be15, type: 2}
@@ -63,6 +64,7 @@ MonoBehaviour:
   TrunkTile: {fileID: 11400000, guid: 243d0df1595e8d44fa44181f37d75911, type: 2}
   TreetopTile: {fileID: 11400000, guid: a9f7b8d19d1724b4499b3a15f81be05b, type: 2}
   running: 0
+  scoreVal: 0
   tgen: {fileID: 6709488267595049215, guid: 28d32c766d14fb047aca4dbde8bec373, type: 3}
   cgen: {fileID: 6657644471938009379, guid: 0cd4672b4e3560f4cb06d2c0308d3d8f, type: 3}
 --- !u!82 &1545385909378853087
