@@ -331,12 +331,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e33b52a6d7627460a935a1d343d4780d, type: 3}
---- !u!1 &845624298 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7941421075469206517, guid: 431dbc9298c69024a8bddf8f20849c20,
-    type: 3}
-  m_PrefabInstance: {fileID: 4517014054573995763}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1183797818 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6671965023350048274, guid: dc5ef48ce26a7684d977f3eea9bfd962,
@@ -355,12 +349,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 257317226}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1688468236 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7941421076596928407, guid: 431dbc9298c69024a8bddf8f20849c20,
-    type: 3}
-  m_PrefabInstance: {fileID: 4517014054573995763}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1698501230 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6114006442111936349, guid: fd4876a920ec2644db5c5676e2f355e8,
@@ -373,35 +361,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5485895486983678015}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1754132018 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7941421077300070501, guid: 431dbc9298c69024a8bddf8f20849c20,
-    type: 3}
-  m_PrefabInstance: {fileID: 4517014054573995763}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1868120337 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7941421076831925836, guid: 431dbc9298c69024a8bddf8f20849c20,
-    type: 3}
-  m_PrefabInstance: {fileID: 4517014054573995763}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1868120339
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1868120337}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80fdd428780f5b144aca485f25381e21, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameController: {fileID: 1183797818}
-  heart1: {fileID: 845624298}
-  heart2: {fileID: 1754132018}
-  heart3: {fileID: 1688468236}
-  health: 0
 --- !u!1001 &741455490906375473
 PrefabInstance:
   m_ObjectHideFlags: 0
