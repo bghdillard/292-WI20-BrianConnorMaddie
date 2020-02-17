@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6367345081185034752}
   - component: {fileID: 3409458284824442772}
   - component: {fileID: 2069713533154287370}
+  - component: {fileID: 2637063320352275697}
   m_Layer: 0
   m_Name: Squirrel
   m_TagString: Untagged
@@ -118,11 +119,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Controller: {fileID: 0}
-  squirrel: {fileID: 9079002216964490105}
   speed: 6
   row: 3
   col: 3
   health: 3
+  maxInvinTime: 5
   audioSource: {fileID: 0}
   bump: {fileID: 0}
 --- !u!61 &6367345081185034752
@@ -268,3 +269,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!111 &2637063320352275697
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9079002216964490105}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0

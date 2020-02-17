@@ -15,10 +15,16 @@ public class SquirrelController : MonoBehaviour
     public int row;
     public int col;
     public int health;
+    public float maxInvinTime;
     public AudioSource audioSource;
     public AudioClip bump;
+
+    float invinTime;
+
     bool dead;
     bool canMove;
+    bool invincible;
+
 
     Rect top;
     Rect bottom;
@@ -42,6 +48,7 @@ public class SquirrelController : MonoBehaviour
         left = new Rect(0, 0, 150, 400);
         right = new Rect(450, 0, 200, 600);
         controls = Texture2D.blackTexture;
+        invinTime = 0.0f;
 
         print("Making Squirrel");
     }
@@ -63,6 +70,16 @@ public class SquirrelController : MonoBehaviour
             if (GC.GetTerrain(row, col) == '|')
             {
                 offScreen();
+            }
+
+            if (invincible)
+            {
+                invinTime -= Time.deltaTime;
+                print(invinTime);
+                if(invinTime <= 0.0f)
+                {
+                    triggerInvin();
+                }
             }
 
             int newRow = row;
@@ -187,7 +204,11 @@ public class SquirrelController : MonoBehaviour
             GC.scoreVal += 100 * (int)(GC.offset);
             Destroy(collision.gameObject);
         }else{
-            ChangeHealth(-1);
+            if (!invincible)
+            {
+                ChangeHealth(-1);
+                triggerInvin();
+            }
         }
         
     }
@@ -223,6 +244,15 @@ public class SquirrelController : MonoBehaviour
 
     public bool isDead(){
         return dead;
+    }
+
+    public void triggerInvin()
+    {
+        invincible = !invincible;
+        if (invincible)
+        {
+            invinTime = maxInvinTime;
+        }
     }
 
 }
