@@ -6,14 +6,15 @@ public class HealthController : MonoBehaviour
 {
 
     public GameController gameController;
-    public GameObject heart1, heart2, heart3;
-    public int health;
+    public GameObject heart1, heart2, heart3, gameOver;
+    int health;
 
     // Start is called before the first frame update
     void Start()
     {
         //begining lives
-        health = 3;
+        //health = 3;
+        gameOver.SetActive(false);
         heart1.SetActive(true);
         heart2.SetActive(true);
         heart3.SetActive(true);
@@ -46,6 +47,7 @@ public class HealthController : MonoBehaviour
             heart1.SetActive(true);
             heart2.SetActive(true);
             heart3.SetActive(true);
+            
         }
         else if (health == 2)
         {
@@ -63,13 +65,8 @@ public class HealthController : MonoBehaviour
             heart1.SetActive(false);
             heart2.SetActive(false);
             heart3.SetActive(false);
+            gameOver.SetActive(true);
             
-            
-        }
-
-        if (squirrel.isDead() == true)
-        {
-            health -= 1;
         }
     }
 }
