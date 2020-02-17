@@ -24,6 +24,7 @@ public class SquirrelController : MonoBehaviour
     Rect bottom;
     Rect left;
     Rect right;
+    Texture2D controls;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +41,7 @@ public class SquirrelController : MonoBehaviour
         bottom = new Rect(150, 0, 300, 150);
         left = new Rect(0, 0, 150, 400);
         right = new Rect(450, 0, 200, 600);
+        controls = Texture2D.blackTexture;
 
         print("Making Squirrel");
     }
@@ -65,12 +67,12 @@ public class SquirrelController : MonoBehaviour
 
             int newRow = row;
             int newCol = col;
-            if (Input.touchCount > 0)
+            if (Input.touchCount > 0 || Input.GetMouseButtonDown(0))
             {
                 Touch touch = Input.GetTouch(0);
                 if (canMove && touch.phase == TouchPhase.Began)
                 {
-                    
+
                     if (Input.GetKeyDown(KeyCode.A) || left.Contains(touch.position))
                     {
                         newCol -= 1;
@@ -167,6 +169,15 @@ public class SquirrelController : MonoBehaviour
         target = new Vector3(col - GC.offset, row, 0);
         transform.position = Vector3.MoveTowards(transform.position, target, step);   
     }
+    
+    void OnGUI()
+    {
+        GUI.Box(top, controls);
+        GUI.Box(bottom, controls);
+        GUI.Box(right, controls);
+        GUI.Box(left, controls);
+    }
+    
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
