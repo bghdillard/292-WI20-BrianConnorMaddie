@@ -55,7 +55,7 @@ public class GameController : MonoBehaviour
     int nextCollectible;
     
 
-    void ResetGame(){ //Maddie - Use this to reset Game
+    public void ResetGame(){ //Maddie - Use this to reset Game
         running = false;
         DestroyImmediate(Squirrel);
         DestroyImmediate(terrainObject);
