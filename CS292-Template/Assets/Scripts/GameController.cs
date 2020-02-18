@@ -293,8 +293,13 @@ public class GameController : MonoBehaviour
             CollectibleController collectibleController = Collectible.GetComponent<CollectibleController>();
             Collectible.transform.parent = terrainObject.transform;
             collectibleController.parent = this;
-            
-            nextCollectible = 2;
+            int colType = -1;
+            if(difficulty == 0) colType = rc(new int[]{0, 0, 3});
+            if(difficulty == 1) colType = rc(new int[]{0, 0, 0, 0, 3, 3, 1});
+            if(difficulty == 2) colType = rc(new int[]{0, 0, 0, 0, 3, 3, 2, 1});
+            collectibleController.type = colType;
+
+            nextCollectible = 5;
         }
     }
 
