@@ -42,6 +42,7 @@ public class GameController : MonoBehaviour
     public int scoreVal = 0;
     public TrainGenController tgen;
     public CarGenController cgen;
+    public PedestrianGenController pgen;
     System.Random rnd = new System.Random();
     Dictionary<int,List<char>> T; //Terrain Array
     Dictionary<int,List<char>> B; //Access Array
@@ -145,11 +146,11 @@ public class GameController : MonoBehaviour
             landSpeed += ((1 / (float)(front + 20)) * Time.deltaTime); //Acceleration Function integrates to Log
 
             offset += landSpeed * Time.deltaTime;
-            if(offset > 10 && difficulty == 0){
+            if(offset > 25 && difficulty == 0){
                 print("Medium");
                 difficulty = 1;
             }
-            if(offset > 40 && difficulty == 1){
+            if(offset > 50 && difficulty == 1){
                 print("Hard");
                 difficulty = 2;
             } 
@@ -236,13 +237,15 @@ public class GameController : MonoBehaviour
                 dir = -1;
             }
 
-            if(difficulty == 0) r = rc(new int[]{0, 0, 0, 0});
-            if(difficulty == 1) r = rc(new int[]{0, 0, 0, 1});
-            if(difficulty == 2) r = rc(new int[]{0, 0, 1, 1});
-            if(r == 1){
+            if(difficulty == 0) r = rc(new int[]{0});
+            if(difficulty == 1) r = rc(new int[]{0, 1});
+            if(difficulty == 2) r = rc(new int[]{0, 1, 2});
+            if(r == 0){
+                MakeTracks(dir);
+            } else if(r == 0) {
                 MakeRoad(dir);
             } else {
-                MakeTracks(dir);
+                MakeSidewalk(dir);
             }
 
             if(genState == 20 || genState == 21 || genState == 24){
@@ -290,8 +293,13 @@ public class GameController : MonoBehaviour
             CollectibleController collectibleController = Collectible.GetComponent<CollectibleController>();
             Collectible.transform.parent = terrainObject.transform;
             collectibleController.parent = this;
-            
-            nextCollectible = 2;
+            int colType = -1;
+            if(difficulty == 0) colType = rc(new int[]{0, 0, 3});
+            if(difficulty == 1) colType = rc(new int[]{0, 0, 0, 0, 3, 3, 1});
+            if(difficulty == 2) colType = rc(new int[]{0, 0, 0, 0, 3, 3, 2, 1});
+            collectibleController.type = colType;
+
+            nextCollectible = 5;
         }
     }
 
@@ -311,6 +319,29 @@ public class GameController : MonoBehaviour
             tg.direction = 1;
         }else{
             tg = Instantiate(cgen, new Vector3(front - offset, 12, 0), Quaternion.identity);
+            tg.direction = -1;
+        }
+        tg.transform.parent = terrainObject.transform;
+        tg.parent = this;
+        tg.squirrel = Squirrel;
+    }
+
+    void MakeSidewalk(int dir){
+        for(int i = bot; i < top; i+=1){
+            terrain.SetTile(new Vector3Int(front, i, 0), RoadTile);
+        }
+
+        for(int i = 0; i < 7; i += 1){
+            if(dir == 1){T[front][i] = '>';}
+            else{T[front][i] = '<';}
+        }
+        
+        PedestrianGenController tg;
+        if(dir == 1){
+            tg = Instantiate(pgen, new Vector3(front - offset, -3, 0), Quaternion.identity);
+            tg.direction = 1;
+        }else{
+            tg = Instantiate(pgen, new Vector3(front - offset, 12, 0), Quaternion.identity);
             tg.direction = -1;
         }
         tg.transform.parent = terrainObject.transform;

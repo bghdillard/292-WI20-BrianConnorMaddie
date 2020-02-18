@@ -19,6 +19,8 @@ public class SquirrelController : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip bump;
 
+    public float colInvinTime;
+    public float hurtInvinTime;
     float invinTime;
 
     bool dead;
@@ -47,6 +49,7 @@ public class SquirrelController : MonoBehaviour
         bottom = new Rect(150, 0, 300, 150);
         left = new Rect(0, 0, 150, 400);
         right = new Rect(450, 0, 200, 600);
+        invincible = false;
         controls = Texture2D.blackTexture;
         invinTime = 0.0f;
 
@@ -64,6 +67,16 @@ public class SquirrelController : MonoBehaviour
         bool moveD = false;
 
         canMove = Vector3.Distance(transform.position, target) <= 0.001f;
+
+        if (invincible)
+        {
+            invinTime -= Time.deltaTime;
+            print(invinTime);
+            if(invinTime <= 0.0f)
+            {
+                triggerInvin();
+            }
+        }
 
         if (!dead)
         {
@@ -201,17 +214,35 @@ public class SquirrelController : MonoBehaviour
         //print(collision.gameObject.layer);
         if(collision.gameObject.layer == 11){
             CollectibleController cc = collision.gameObject.GetComponent<CollectibleController>();
-            GC.scoreVal += 100 * (int)(GC.offset);
+            if(cc.type == 0){
+                GC.scoreVal += 100 * (int)(GC.offset);
+            }else if(cc.type == 1){
+
+            }else if(cc.type == 2){
+
+            }else{
+                triggerInvin(colInvinTime);
+            }
             Destroy(collision.gameObject);
         }else{
             if (!invincible)
             {
+                print("Hurt");
                 ChangeHealth(-1);
-                triggerInvin();
+                triggerInvin(hurtInvinTime);
             }
         }
         
     }
+
+    public void triggerInvin(float nextTime = 0) 
+    { 
+        invincible = !invincible; 
+        if (invincible) 
+        { 
+            invinTime = nextTime; 
+        } 
+    } 
 
     public void ChangeHealth(int change)
     {
