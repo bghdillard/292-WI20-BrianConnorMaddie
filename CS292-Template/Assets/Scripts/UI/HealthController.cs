@@ -24,13 +24,13 @@ public class HealthController : MonoBehaviour
     void Update()
     {
 
-        if(gameController.Squirrel == null) print("hello1");
+        if(gameController.Squirrel == null) return;//print("hello1");
         SquirrelController squirrel = gameController.Squirrel.GetComponent<SquirrelController>();
-        if (squirrel == null) print("hello2");    
+        if (squirrel == null) return;//print("hello2");    
         
 
         health = squirrel.health;
-        print("health" + health);
+        //print("health" + health);
 
         if (health == 3)
         {

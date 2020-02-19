@@ -59,13 +59,9 @@ public class SquirrelController : MonoBehaviour
         controls = Texture2D.blackTexture;
         invinTime = 0.0f;
 
-        /// print("Making Squirrel");
+        print("Making Squirrel");
     }
 
-    void OnAwake(){
-        SR.color = Color.blue;
-    }
-    // Update is called once per frame
     void Update()
     {
         
@@ -106,60 +102,38 @@ public class SquirrelController : MonoBehaviour
                 //SR.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);  
             }
 
+            Rect topLeft = new Rect(0, 0, Screen.width / 2, Screen.height / 2);
+            Rect bottomLeft = new Rect(0, Screen.height / 2, Screen.width / 2, Screen.height / 2);
+
             int newRow = row;
             int newCol = col;
-            if (Input.touchCount > 0 || Input.GetMouseButtonDown(0))
+            if (canMove)
             {
-                Touch touch = Input.GetTouch(0);
-                if (canMove && touch.phase == TouchPhase.Began)
+                if ((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) || Input.GetMouseButtonDown(0))
                 {
+                    Vector2 touchPos = new Vector2(-100, -100);
+                    if(Input.touchCount > 0) {
+                        touchPos = Input.GetTouch(0).position;
+                    } else {
+                        touchPos = Input.mousePosition;
+                    }
 
-                    if (Input.GetKeyDown(KeyCode.A) || left.Contains(touch.position))
-                    {
-                        newCol -= 1;
-                        moveL = true;
-                    }
-                    if (Input.GetKeyDown(KeyCode.D) || right.Contains(touch.position))
-                    {
-                        newCol += 1;
-                        moveR = true;
-                    }
-                    if (Input.GetKeyDown(KeyCode.W) || top.Contains(touch.position))
-                    {
-                        newRow += 1;
-                        moveU = true;
-                    }
-                    if (Input.GetKeyDown(KeyCode.S) || bottom.Contains(touch.position))
-                    {
-                        newRow -= 1;
-                        moveD = true;
-                    }
-                }
-            }else{
-                if (canMove)
-                {
-                    if (Input.GetKeyDown(KeyCode.A))
-                    {
-                        newCol -= 1;
-                        moveL = true;
-                    }
-                    if (Input.GetKeyDown(KeyCode.D))
-                    {
-                        newCol += 1;
-                        moveR = true;
-                    }
-                    if (Input.GetKeyDown(KeyCode.W))
-                    {
-                        newRow += 1;
-                        moveU = true;
-                    }
-                    if (Input.GetKeyDown(KeyCode.S))
-                    {
-                        newRow -= 1;
-                        moveD = true;
-                    }
-                }
+                    if (left.Contains(touchPos)) moveL = true;
+                    if (right.Contains(touchPos)) moveR = true;
+                    if (top.Contains(touchPos)) moveU = true;
+                    if (bottom.Contains(touchPos)) moveD = true;
+                }else{
+                    if (Input.GetKeyDown(KeyCode.A)) moveL = true;
+                    if (Input.GetKeyDown(KeyCode.D)) moveR = true;
+                    if (Input.GetKeyDown(KeyCode.W)) moveU = true;
+                    if (Input.GetKeyDown(KeyCode.S)) moveD = true;
+                }   
             }
+
+            if (moveL) newCol--;
+            if (moveR) newCol++;
+            if (moveU) newRow++;
+            if (moveD) newRow--;
 
             if(moveL || moveR || moveU || moveD){
                 char t = GC.GetTerrain(newRow, newCol);
@@ -217,13 +191,13 @@ public class SquirrelController : MonoBehaviour
     }
     
 
-    void OnGUI()
-    {
-        GUI.Box(top, cd);
-        GUI.Box(bottom, cu);
-        GUI.Box(right, cr);
-        GUI.Box(left, cl);
-    }
+    //void OnGUI()
+    //{
+    //    GUI.Box(top, cd);
+    //    GUI.Box(bottom, cu);
+    //    GUI.Box(right, cr);
+    //    GUI.Box(left, cl);
+    //}
     
 
     private void OnTriggerEnter2D(Collider2D collision)

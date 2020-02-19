@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &314534041727382529
 Transform:
   m_ObjectHideFlags: 0
@@ -45,7 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   terrainObject: {fileID: 0}
-  TerrainPrefab: {fileID: 0}
+  TerrainPrefab: {fileID: 6428801650364661545, guid: 1bf80fe21043c584bbb057f04cb18473,
+    type: 3}
   TerrainLayers: {fileID: 4126827122018522674, guid: a80c57b22a3447b4990d647942bda9fc,
     type: 3}
   landSpeed: 0.8

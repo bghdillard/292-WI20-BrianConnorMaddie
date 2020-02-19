@@ -58,6 +58,7 @@ public class GameController : MonoBehaviour
 
     public void ResetGame(){ //Maddie - Use this to reset Game
         running = false;
+        print("Destorying Squirrel");
         DestroyImmediate(Squirrel);
         DestroyImmediate(terrainObject);
         DestroyImmediate(tlayers);
@@ -110,6 +111,7 @@ public class GameController : MonoBehaviour
         tlayers.transform.parent = terrainObject.transform;
             
         Squirrel = Instantiate(SquirrelPrefab, new Vector3(3, 3, 0), Quaternion.identity).gameObject;
+        //Squirrel.transform.parent = terrainObject.transform;
         squirrelController = Squirrel.GetComponent<SquirrelController>();
         squirrelController.Controller = gameObject;
 
