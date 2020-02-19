@@ -23,24 +23,14 @@ public class HealthController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //updating health
-        /* (health > 3)
-        {
-            health = 3;
-            heart1.SetActive(true);
-            heart2.SetActive(true);
-            heart3.SetActive(true);
-        }
-        else */
-        //GameObject thePlayer = GameObject.Find("SquirrelController");
-        //if(thePlayer == null) return;
-        if(gameController.Squirrel == null) return;
+
+        if(gameController.Squirrel == null) print("hello1");
         SquirrelController squirrel = gameController.Squirrel.GetComponent<SquirrelController>();
-        if(squirrel == null) return;    
+        if (squirrel == null) print("hello2");    
         
 
         health = squirrel.health;
-        //print(health);
+        print("health" + health);
 
         if (health == 3)
         {

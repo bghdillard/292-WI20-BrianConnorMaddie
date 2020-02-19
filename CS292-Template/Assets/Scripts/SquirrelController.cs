@@ -59,7 +59,7 @@ public class SquirrelController : MonoBehaviour
         controls = Texture2D.blackTexture;
         invinTime = 0.0f;
 
-        print("Making Squirrel");
+        /// print("Making Squirrel");
     }
 
     void OnAwake(){
@@ -91,7 +91,7 @@ public class SquirrelController : MonoBehaviour
             if (invincible)
             {
                 invinTime -= Time.deltaTime;
-                print(invinTime);
+                //print(invinTime);
                 if(invinTime <= 0.0f)
                 {
                     print("Ending Invincibility");
@@ -163,7 +163,7 @@ public class SquirrelController : MonoBehaviour
 
             if(moveL || moveR || moveU || moveD){
                 char t = GC.GetTerrain(newRow, newCol);
-                print(t);
+                //print(t);
                 if (t == '-' || t == '=' || t == '<' || t == '>' || (t == 'X' && hammers > 0))
                 {
                     if(t == 'X'){
