@@ -216,6 +216,7 @@ public class SquirrelController : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, target, step);   
     }
     
+
     void OnGUI()
     {
         GUI.Box(top, cd);
