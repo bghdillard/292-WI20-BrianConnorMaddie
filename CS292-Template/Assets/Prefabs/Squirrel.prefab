@@ -126,6 +126,10 @@ MonoBehaviour:
   hammers: 3
   audioSource: {fileID: 0}
   bump: {fileID: 0}
+  cu: {fileID: 2800000, guid: e8c6085e1de54c44c814214b70eb788f, type: 3}
+  cd: {fileID: 2800000, guid: bb255e4ce01c9744d8cbbb61ad9589ef, type: 3}
+  cr: {fileID: 2800000, guid: bdb9573acc9f8f44a88fe6f2b7a34ac9, type: 3}
+  cl: {fileID: 2800000, guid: cdd3f3dc045165d448d7f147968cb5cc, type: 3}
   colInvinTime: 5
   hurtInvinTime: 2
 --- !u!61 &6367345081185034752
