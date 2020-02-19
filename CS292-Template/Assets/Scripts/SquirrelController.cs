@@ -18,6 +18,10 @@ public class SquirrelController : MonoBehaviour
     public float maxInvinTime;
     public AudioSource audioSource;
     public AudioClip bump;
+    public Texture2D cu;
+    public Texture2D cd;
+    public Texture2D cr;
+    public Texture2D cl;
 
     public float colInvinTime;
     public float hurtInvinTime;
@@ -202,10 +206,10 @@ public class SquirrelController : MonoBehaviour
     
     void OnGUI()
     {
-        GUI.Box(top, controls);
-        GUI.Box(bottom, controls);
-        GUI.Box(right, controls);
-        GUI.Box(left, controls);
+        GUI.Box(top, cd);
+        GUI.Box(bottom, cu);
+        GUI.Box(right, cr);
+        GUI.Box(left, cl);
     }
     
 
