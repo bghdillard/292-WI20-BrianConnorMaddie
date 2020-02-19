@@ -762,7 +762,6 @@ GameObject:
   - component: {fileID: 663100131573805754}
   - component: {fileID: 4241899498658776124}
   - component: {fileID: 117704105760793774}
-  - component: {fileID: 890837436774759679}
   m_Layer: 5
   m_Name: Settings Screen
   m_TagString: Untagged
@@ -856,24 +855,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &890837436774759679
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6114006442111936349}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8782b0206a6cd03489937c8f36e0072b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: {fileID: 0}
-  settings: {fileID: 6114006442111936349}
-  credits: {fileID: 0}
-  gameUI: {fileID: 0}
-  gameplay: {fileID: 0}
-  GameOver: {fileID: 741455491929279663, guid: c83804bd997d3104f997c4cad889573b, type: 3}
 --- !u!1 &6157808533709959122
 GameObject:
   m_ObjectHideFlags: 0
