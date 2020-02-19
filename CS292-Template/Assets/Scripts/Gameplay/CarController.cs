@@ -35,14 +35,11 @@ public class CarController : MonoBehaviour
         if (direction == -1)
         {
             gameObject.transform.Rotate(0.0f, 0.0f, 180.0f, Space.Self);
-            //transform.localScale.x *= 1;
-            //gameObject.transform.Rotate(0, 180, 0);;
         }
     }
 
     void Update()
     {
-        //transform.position += new Vector3(-1 * parent.landSpeed * Time.deltaTime, 0, 0);
         transform.position += new Vector3(0, direction * speed * Time.deltaTime, 0);
 
         if(transform.position.x < -1){

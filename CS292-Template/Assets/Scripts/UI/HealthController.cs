@@ -9,7 +9,6 @@ public class HealthController : MonoBehaviour
     public GameObject heart1, heart2, heart3, gameOver;
     int health;
 
-    // Start is called before the first frame update
     void Start()
     {
         //begining lives
@@ -23,40 +22,16 @@ public class HealthController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if(gameController.Squirrel == null) return;//print("hello1");
+        if(gameController.Squirrel == null) return;
         SquirrelController squirrel = gameController.Squirrel.GetComponent<SquirrelController>();
-        if (squirrel == null) return;//print("hello2");    
-        
+        if (squirrel == null) return; 
 
         health = squirrel.health;
-        //print("health" + health);
 
-        if (health == 3)
-        {
-            heart1.SetActive(true);
-            heart2.SetActive(true);
-            heart3.SetActive(true);
-            
-        }
-        else if (health == 2)
-        {
-            heart1.SetActive(true);
-            heart2.SetActive(true);
-            heart3.SetActive(false);
-        }
-        else if (health == 1)
-        {
-            heart1.SetActive(true);
-            heart2.SetActive(false);
-            heart3.SetActive(false);
-        }
-        else { //if health == 0
-            heart1.SetActive(false);
-            heart2.SetActive(false);
-            heart3.SetActive(false);
-            gameOver.SetActive(true);
-            
-        }
+        if (health < 3) heart3.SetActive(false); else heart3.SetActive(true);
+        if (health < 2) heart2.SetActive(false); else heart2.SetActive(true);
+        if (health < 1) heart1.SetActive(false); else heart1.SetActive(true);
+
+        if (health == 0) gameOver.SetActive(true);
     }
 }
