@@ -65,6 +65,8 @@ MonoBehaviour:
   TreetopTile: {fileID: 11400000, guid: a9f7b8d19d1724b4499b3a15f81be05b, type: 2}
   CollectiblePrefab: {fileID: 329657623806498755, guid: f63bad6640772f949bc9d31eff2ff536,
     type: 3}
+  RockExplosion: {fileID: 1247952108461965794, guid: 66586baf3051d28479e54044a001d23a,
+    type: 3}
   running: 0
   scoreVal: 0
   tgen: {fileID: 6709488267595049215, guid: 28d32c766d14fb047aca4dbde8bec373, type: 3}

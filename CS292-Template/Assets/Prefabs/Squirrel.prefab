@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: -8372164463902552562, guid: 96ae7dcad3921af49aa65faf72859cfc,
     type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.39215687}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -123,11 +123,11 @@ MonoBehaviour:
   row: 3
   col: 3
   health: 3
-  maxInvinTime: 5
+  hammers: 3
   audioSource: {fileID: 0}
   bump: {fileID: 0}
   colInvinTime: 5
-  hurtInvinTime: 1
+  hurtInvinTime: 2
 --- !u!61 &6367345081185034752
 BoxCollider2D:
   m_ObjectHideFlags: 0

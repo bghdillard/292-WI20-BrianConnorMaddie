@@ -37,6 +37,7 @@ public class GameController : MonoBehaviour
     public Tile TrunkTile;
     public Tile TreetopTile;
     public GameObject CollectiblePrefab;
+    public GameObject RockExplosion;
     int genState; //Used for markov chains
     public bool running;
     public int scoreVal = 0;
@@ -64,11 +65,29 @@ public class GameController : MonoBehaviour
         SetupGame();
     }
 
+    public void PauseGame(){
+        running = false;
+    }
+
+    public void UnpauseGame(){
+        running = true;
+    }
+
     public char GetTerrain(int row, int col){ //Brian - Use this for movement
         if(row < 0) return '|';
         if(row >= 7) return '|';   
         if(T.ContainsKey(col) == false) return '|';
         return T[col][row];
+    }
+
+    public void BreakRock(int x, int y){
+        print("X:" + x.ToString() + " Y:" + y.ToString());
+
+        GameObject re = Instantiate(RockExplosion, new Vector3(-1 * offset + x, y, 0), Quaternion.identity).gameObject;
+        re.transform.parent = terrainObject.transform;
+
+        objects.SetTile(new Vector3Int(x, y, 0), null);
+        T[x][y] = '-';
     }
 
     void Start()
@@ -126,24 +145,16 @@ public class GameController : MonoBehaviour
         
     }
 
-    
-
     void Update(){
         if(terrainObject == null) return;
         terrainObject.transform.position = new Vector3(-1 * offset - 0.5f, terrainObject.transform.position.y, 0);
-        //if(running){
-            
-            //TerrainTileset.transform.position = new Vector3(-1 * offset - 0.5f, TerrainTileset.transform.position.y, 0);// = TerrainTileset.transform.position + new Vector3(-1 * landSpeed * Time.deltaTime, 0, 0);
-            //ObjectTileset.transform.position = TerrainTileset.transform.position;
-            //AboveTileset.transform.position = TerrainTileset.transform.position;
-        //}
     }
 
     void FixedUpdate()
     {
         if(running){
             //landSpeed += Time.deltaTime / 10;
-            landSpeed += ((1 / (float)(front + 20)) * Time.deltaTime); //Acceleration Function integrates to Log
+            landSpeed += ((1 / (float)(front + 40)) * Time.deltaTime); //Acceleration Function integrates to Log
 
             offset += landSpeed * Time.deltaTime;
             if(offset > 25 && difficulty == 0){
@@ -174,13 +185,9 @@ public class GameController : MonoBehaviour
         }
     }
 
-    void PauseGame(){
-        running = false;
-    }
+    
 
-    void UnpauseGame(){
-        running = true;
-    }
+    
 
     void LayerSetup(){
         List<char> L = new List<char>();
@@ -203,7 +210,7 @@ public class GameController : MonoBehaviour
         List<char> Terrain = T[front];
         List<char> NewBlocking = new List<char>();
         for(int i = 0; i < 7; i += 1){
-            if(Terrain[i] == '#'){
+            if(Terrain[i] == '#' || Terrain[i] == 'X'){
                 NewBlocking.Add('#');
             }else{
                 NewBlocking.Add(Last[i]);
@@ -242,7 +249,7 @@ public class GameController : MonoBehaviour
             if(difficulty == 2) r = rc(new int[]{0, 1, 2});
             if(r == 0){
                 MakeTracks(dir);
-            } else if(r == 0) {
+            } else if(r == 1) {
                 MakeRoad(dir);
             } else {
                 MakeSidewalk(dir);
@@ -398,17 +405,17 @@ public class GameController : MonoBehaviour
             if(paths.Contains(i) || !rocks.Contains(i)){
                 T[front][i] = '-';
 
-                
             }else{
                 T[front][i] = '#';
-                int r = Random.Range(0, 3);
+                int r = Random.Range(0, 4);
                 if(r == 0){
                     objects.SetTile(new Vector3Int(front, i, 0), BushTile);
                 } else if (r == 1) {
-                    objects.SetTile(new Vector3Int(front, i, 0), RockTile);
-                } else {
                     objects.SetTile(new Vector3Int(front, i, 0), TrunkTile);
                     above.SetTile(new Vector3Int(front, i + 1, 0), TreetopTile);
+                } else {
+                    objects.SetTile(new Vector3Int(front, i, 0), RockTile);
+                    T[front][i] = 'X';
                 }
             }
         }
@@ -435,8 +442,8 @@ public class GameController : MonoBehaviour
                 T[front][i] = '=';
                 terrain.SetTile(new Vector3Int(front, i, 0), IceTile);
             }else{
-                T[front][i] = '#';
                 objects.SetTile(new Vector3Int(front, i, 0), RockTile);
+                T[front][i] = 'X';
             }
         }
     }

@@ -14,8 +14,8 @@ public class SquirrelController : MonoBehaviour
     public float speed = 1.0f;
     public int row;
     public int col;
-    public int health;
-    public float maxInvinTime;
+    public int health = 3;
+    public int hammers = 0;
     public AudioSource audioSource;
     public AudioClip bump;
 
@@ -33,10 +33,12 @@ public class SquirrelController : MonoBehaviour
     Rect left;
     Rect right;
     Texture2D controls;
-
+    SpriteRenderer SR; 
     // Start is called before the first frame update
     void Start()
     {
+        SR = gameObject.GetComponent<SpriteRenderer>();
+        SR.color = Color.blue;
         //Controller = GameObject.Find("/Everything/GameController");
         GC = Controller.GetComponent<GameController>();
         audioSource = gameObject.GetComponent<AudioSource>();
@@ -56,9 +58,16 @@ public class SquirrelController : MonoBehaviour
         print("Making Squirrel");
     }
 
+    void OnAwake(){
+        SR.color = Color.blue;
+    }
     // Update is called once per frame
     void Update()
     {
+        
+        //print(SR.color);
+        SR.color = Color.blue;//new Color(0f, 0f, 0f, 1f);    
+
         float step = speed * Time.deltaTime;
 
         bool moveL = false;
@@ -67,16 +76,6 @@ public class SquirrelController : MonoBehaviour
         bool moveD = false;
 
         canMove = Vector3.Distance(transform.position, target) <= 0.001f;
-
-        if (invincible)
-        {
-            invinTime -= Time.deltaTime;
-            print(invinTime);
-            if(invinTime <= 0.0f)
-            {
-                triggerInvin();
-            }
-        }
 
         if (!dead)
         {
@@ -91,8 +90,16 @@ public class SquirrelController : MonoBehaviour
                 print(invinTime);
                 if(invinTime <= 0.0f)
                 {
-                    triggerInvin();
+                    print("Ending Invincibility");
+                    
+
+                    triggerInvin(-1);
                 }
+                //SpriteRenderer SR = GetComponent<SpriteRenderer>();
+                //SR.color = new Color(1.0f, 1.0f, 1.0f, 0.1f);            
+            } else {
+                //SpriteRenderer SR = GetComponent<SpriteRenderer>();
+                //SR.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);  
             }
 
             int newRow = row;
@@ -150,10 +157,15 @@ public class SquirrelController : MonoBehaviour
                 }
             }
 
-            char t = GC.GetTerrain(newRow, newCol);
             if(moveL || moveR || moveU || moveD){
-                if (t == '-' || t == '=' || t == '<' || t == '>')
+                char t = GC.GetTerrain(newRow, newCol);
+                print(t);
+                if (t == '-' || t == '=' || t == '<' || t == '>' || (t == 'X' && hammers > 0))
                 {
+                    if(t == 'X'){
+                        hammers -= 1;
+                        GC.BreakRock(newCol, newRow);
+                    }
                     row = newRow;
                     col = newCol;
                     bool hitStop = false;
@@ -214,14 +226,15 @@ public class SquirrelController : MonoBehaviour
         //print(collision.gameObject.layer);
         if(collision.gameObject.layer == 11){
             CollectibleController cc = collision.gameObject.GetComponent<CollectibleController>();
+            print("Picked up: " + cc.type.ToString());
             if(cc.type == 0){
                 GC.scoreVal += 100 * (int)(GC.offset);
             }else if(cc.type == 1){
-
+                if(health < 3) ChangeHealth(1);
             }else if(cc.type == 2){
-
-            }else{
                 triggerInvin(colInvinTime);
+            }else{
+                if(hammers < 3) hammers += 1;
             }
             Destroy(collision.gameObject);
         }else{
@@ -235,11 +248,15 @@ public class SquirrelController : MonoBehaviour
         
     }
 
-    public void triggerInvin(float nextTime = 0) 
+    public void triggerInvin(float nextTime) 
     { 
         invincible = !invincible; 
         if (invincible) 
         { 
+            print("Starting Invincibility");
+            //SpriteRenderer SR = GetComponent<SpriteRenderer>();
+            //SR.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+
             invinTime = nextTime; 
         } 
     } 
@@ -276,14 +293,4 @@ public class SquirrelController : MonoBehaviour
     public bool isDead(){
         return dead;
     }
-
-    public void triggerInvin()
-    {
-        invincible = !invincible;
-        if (invincible)
-        {
-            invinTime = maxInvinTime;
-        }
-    }
-
 }
