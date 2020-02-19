@@ -41,9 +41,6 @@ public class SquirrelController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SR = gameObject.GetComponent<SpriteRenderer>();
-        SR.color = Color.blue;
-        //Controller = GameObject.Find("/Everything/GameController");
         GC = Controller.GetComponent<GameController>();
         audioSource = gameObject.GetComponent<AudioSource>();
         anim = GetComponent<Animator>();
@@ -64,10 +61,6 @@ public class SquirrelController : MonoBehaviour
 
     void Update()
     {
-        
-        //print(SR.color);
-        SR.color = Color.blue;//new Color(0f, 0f, 0f, 1f);    
-
         float step = speed * Time.deltaTime;
 
         bool moveL = false;
@@ -91,15 +84,14 @@ public class SquirrelController : MonoBehaviour
                 if(invinTime <= 0.0f)
                 {
                     print("Ending Invincibility");
-                    
+                    SpriteRenderer SR = GetComponent<SpriteRenderer>();
+                    SR.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);    
 
                     triggerInvin(-1);
                 }
-                //SpriteRenderer SR = GetComponent<SpriteRenderer>();
-                //SR.color = new Color(1.0f, 1.0f, 1.0f, 0.1f);            
+                        
             } else {
-                //SpriteRenderer SR = GetComponent<SpriteRenderer>();
-                //SR.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);  
+                
             }
 
             Rect topLeft = new Rect(0, 0, Screen.width / 2, Screen.height / 2);
@@ -233,8 +225,8 @@ public class SquirrelController : MonoBehaviour
         if (invincible) 
         { 
             print("Starting Invincibility");
-            //SpriteRenderer SR = GetComponent<SpriteRenderer>();
-            //SR.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+            SpriteRenderer SR = GetComponent<SpriteRenderer>();
+            SR.color = new Color(1.0f, 1.0f, 1.0f, 0.4f);  
 
             invinTime = nextTime; 
         } 
