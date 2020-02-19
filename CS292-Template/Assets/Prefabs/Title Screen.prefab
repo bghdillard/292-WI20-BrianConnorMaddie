@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 8040227195393441078}
   - component: {fileID: 8040227195393441073}
   - component: {fileID: 8040227195393441072}
-  - component: {fileID: 388446751}
   m_Layer: 5
   m_Name: Title Screen
   m_TagString: Untagged
@@ -104,24 +103,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &388446751
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8040227195393441075}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8782b0206a6cd03489937c8f36e0072b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: {fileID: 8040227195393441075}
-  settings: {fileID: 0}
-  credits: {fileID: 0}
-  gameUI: {fileID: 0}
-  gameplay: {fileID: 0}
-  GameOver: {fileID: 741455491929279663, guid: c83804bd997d3104f997c4cad889573b, type: 3}
 --- !u!1 &8040227195682849737
 GameObject:
   m_ObjectHideFlags: 0
@@ -250,8 +231,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 1
-      - m_Target: {fileID: 6114006442111936349, guid: fd4876a920ec2644db5c5676e2f355e8,
-          type: 3}
+      - m_Target: {fileID: 0}
         m_MethodName: SetActive
         m_Mode: 6
         m_Arguments:
