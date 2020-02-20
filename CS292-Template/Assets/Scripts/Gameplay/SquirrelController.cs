@@ -135,7 +135,7 @@ public class SquirrelController : MonoBehaviour
                 if (t == '-' || t == '=' || t == '<' || t == '>' || (t == 'X' && hammers > 0))
                 {
                     totalMoves += 1;
-                    if(totalMoves > 3) GC.removeOverlay();
+                    if(totalMoves > 3) GC.RemoveOverlay();
                     
                     if(t == 'X'){
                         hammers -= 1;
@@ -244,6 +244,7 @@ public class SquirrelController : MonoBehaviour
         {
             anim.SetTrigger("IsDead");
             dead = true;
+            GC.SaveScore(GC.scoreVal, GC.runTime);
         }
     }
 

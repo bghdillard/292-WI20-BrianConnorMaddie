@@ -47,6 +47,7 @@ public class GameController : MonoBehaviour
     Queue<int> CQ;
 
     public bool running;
+    public float runTime;
     public int scoreVal = 0;
     public TrainGenController tgen;
     public CarGenController cgen;
@@ -62,7 +63,6 @@ public class GameController : MonoBehaviour
     int difficulty;
     int nextCollectible;
     
-
     public void ResetGame(){ //Maddie - Use this to reset Game
         running = false;
         print("Destorying Squirrel");
@@ -100,9 +100,21 @@ public class GameController : MonoBehaviour
         T[x][y] = '-';
     }
 
-    public void removeOverlay(){
+    public void RemoveOverlay(){
         DestroyImmediate(Overlay);
     }
+
+    public void SaveScore(int newScore, float playTime){
+        DataLoader DL = new DataLoader();
+        DL.LoadFile();
+        List<int> scores = DL.data.scores.ToList();
+        scores.Add(scoreVal);
+        DL.data.scores = scores.ToArray();
+        DL.data.runs += 1;
+        DL.data.timePlayed += playTime;
+        DL.SaveFile();
+    }
+
 
     void Start()
     {
@@ -115,9 +127,10 @@ public class GameController : MonoBehaviour
         front = 13;
         landSpeed = 0.8f;
         running = false;
+        runTime = 0;
 
         Overlay = Instantiate(OverlayPrefab, new Vector3(0, 0, 0), Quaternion.identity).gameObject;
-        //Overlay.transform.parent = transform;
+        Overlay.transform.parent = transform;
 
         terrainObject = Instantiate(TerrainPrefab, new Vector3(0, 0, 0), Quaternion.identity).gameObject;
         terrainObject.transform.position = new Vector3(-1 * offset, terrainObject.transform.position.y, 0);
@@ -175,25 +188,31 @@ public class GameController : MonoBehaviour
         if(running){
             //landSpeed += Time.deltaTime / 10;
             landSpeed += ((1 / (float)(front + 50)) * Time.deltaTime); //Acceleration Function integrates to Log
+            runTime += Time.deltaTime;
 
             offset += landSpeed * Time.deltaTime;
             if(difficulty == -1){
                 print("Intro");
                 difficulty = 0;
             }
-            if(offset > 10 && difficulty == 0){
+            if(front-13 > 5 && difficulty == 0){
                 print("Easy");
+                TQ.Enqueue(1);
+                CQ.Enqueue(3);
                 difficulty = 1;
             }
-            if(offset > 25 && difficulty == 0){
+            if(front-13 > 15 && difficulty == 0){
                 print("Medium");
+                TQ.Enqueue(2);
+                CQ.Enqueue(1);
                 difficulty = 2;
             }
-            if(offset > 50 && difficulty == 1){
+            if(front-13 > 40 && difficulty == 1){
                 print("Hard");
+                CQ.Enqueue(2);
                 difficulty = 3;
             } 
-            if(offset + 24 > front){
+            if(offset + 29 > front){
                 MakeNewLayer();
             }
         }
@@ -222,14 +241,14 @@ public class GameController : MonoBehaviour
         for(int i = 0; i < 7; i += 1){
             L.Add('-');
         }
-        T.Remove(front - 25);
-        B.Remove(front - 25);
+        T.Remove(front - 30);
+        B.Remove(front - 30);
         T.Add(front, L);
 
         for(int i = bot; i < top; i+=1){
-            terrain.SetTile(new Vector3Int(front - 25, i, 0), null);
-            objects.SetTile(new Vector3Int(front - 25, i, 0), null);
-            above.SetTile(new Vector3Int(front - 25, i, 0), null);
+            terrain.SetTile(new Vector3Int(front - 30, i, 0), null);
+            objects.SetTile(new Vector3Int(front - 30, i, 0), null);
+            above.SetTile(new Vector3Int(front - 30, i, 0), null);
         }
     }
 
@@ -274,8 +293,9 @@ public class GameController : MonoBehaviour
 
             if(difficulty == 0) r = rc(new int[]{0});
             if(difficulty == 1) r = rc(new int[]{0, 0, 1});
-            if(difficulty == 2) r = rc(new int[]{0, 1});
+            if(difficulty == 2) r = rc(new int[]{0, 0, 1, 1, 2});
             if(difficulty == 3) r = rc(new int[]{0, 1, 2});
+            if(TQ.Count > 0) r = TQ.Dequeue();
             if(r == 0){
                 MakeTracks(dir);
             } else if(r == 1) {
@@ -341,7 +361,7 @@ public class GameController : MonoBehaviour
             if(difficulty == 1) colType = rc(new int[]{0, 0, 3});
             if(difficulty == 2) colType = rc(new int[]{0, 0, 0, 0, 3, 3, 1});
             if(difficulty == 3) colType = rc(new int[]{0, 0, 0, 3, 3, 1, 2});
-            //if(CQ.Count > 0) colType = CQ.
+            if(CQ.Count > 0) colType = CQ.Dequeue();
             collectibleController.type = colType;
 
             nextCollectible = 5;

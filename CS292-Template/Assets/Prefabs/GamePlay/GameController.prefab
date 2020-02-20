@@ -72,6 +72,7 @@ MonoBehaviour:
   RockExplosion: {fileID: 1247952108461965794, guid: 66586baf3051d28479e54044a001d23a,
     type: 3}
   running: 0
+  runTime: 0
   scoreVal: 0
   tgen: {fileID: 6709488267595049215, guid: 28d32c766d14fb047aca4dbde8bec373, type: 3}
   cgen: {fileID: 6657644471938009379, guid: 0cd4672b4e3560f4cb06d2c0308d3d8f, type: 3}
@@ -88,7 +89,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: a50aa8f401be11744a113dad47352f67, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0
