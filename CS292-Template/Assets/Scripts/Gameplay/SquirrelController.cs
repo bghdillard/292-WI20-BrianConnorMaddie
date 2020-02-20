@@ -30,7 +30,7 @@ public class SquirrelController : MonoBehaviour
     bool dead;
     bool canMove;
     bool invincible;
-
+    int totalMoves;
 
     Rect top;
     Rect bottom;
@@ -48,10 +48,14 @@ public class SquirrelController : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
         canMove = true;
         target = transform.position;
-        top = new Rect(150, 300, 300, 150);
-        bottom = new Rect(150, 0, 300, 150);
-        left = new Rect(0, 0, 150, 400);
-        right = new Rect(450, 0, 200, 600);
+        totalMoves = 0;
+        hammers = 0;
+
+        top = new Rect(Screen.width / 3, Screen.height * 2 / 3, Screen.width / 3, Screen.height / 3);
+        bottom = new Rect(Screen.width / 3, 0, Screen.width / 3, Screen.height / 3);
+        left = new Rect(0, 0, Screen.width / 3, Screen.height);
+        right = new Rect(Screen.width * 2 / 3, 0, Screen.width / 3, Screen.height);
+
         invincible = false;
         controls = Texture2D.blackTexture;
         invinTime = 0.0f;
@@ -94,9 +98,7 @@ public class SquirrelController : MonoBehaviour
                 
             }
 
-            Rect topLeft = new Rect(0, 0, Screen.width / 2, Screen.height / 2);
-            Rect bottomLeft = new Rect(0, Screen.height / 2, Screen.width / 2, Screen.height / 2);
-
+            
             int newRow = row;
             int newCol = col;
             if (canMove)
@@ -132,6 +134,9 @@ public class SquirrelController : MonoBehaviour
                 //print(t);
                 if (t == '-' || t == '=' || t == '<' || t == '>' || (t == 'X' && hammers > 0))
                 {
+                    totalMoves += 1;
+                    if(totalMoves > 3) GC.removeOverlay();
+                    
                     if(t == 'X'){
                         hammers -= 1;
                         GC.BreakRock(newCol, newRow);
@@ -213,7 +218,7 @@ public class SquirrelController : MonoBehaviour
             {
                 print("Hurt");
                 ChangeHealth(-1);
-                triggerInvin(hurtInvinTime);
+                if(!dead) triggerInvin(hurtInvinTime);
             }
         }
         
@@ -244,20 +249,28 @@ public class SquirrelController : MonoBehaviour
 
     private void offScreen()
     {
-        ChangeHealth(-1);
         if (!dead)
-        {
-            int i = 3;
-            while (true)
+        {   
+            ChangeHealth(-1);
+            row = 3;
+            int i = 7;
+            while (true && i < 14)
             {
-                if (GC.GetTerrain(row, col + i) == '=' || GC.GetTerrain(row, col + i) == '-')
-                {
-                    break;
-                }
-                i++;
+                i += 1;
+                if (GC.GetTerrain(row, col + i) == '=' || GC.GetTerrain(row, col + i) == '-') break;
             }
-            transform.position = new Vector3(transform.position.x + i, transform.position.y, 0);
+            if(i == 7){
+                i = 7;
+                while (true)
+                {
+                    i += 1;
+                    if (GC.GetTerrain(row, col + 1) == '#' || GC.GetTerrain(row, col + i) == 'X') break;
+                }
+                GC.BreakRock(row, col + i);
+            }
+
             col = col + i;
+            transform.position = new Vector3(col - GC.offset, row, 0);
         }
     }
 

@@ -20,6 +20,9 @@ public class GameController : MonoBehaviour
     public GameObject SquirrelPrefab;
     public SquirrelController squirrelController;
 
+    public GameObject Overlay;
+    public GameObject OverlayPrefab;
+
     public float offset; //How far has camera(terrain) moved
     int front = 13; //Used for determine new layer placement
     int bot = -1;
@@ -38,11 +41,10 @@ public class GameController : MonoBehaviour
     public Tile TreetopTile;
     public GameObject CollectiblePrefab;
     public GameObject RockExplosion;
-    int genState; //Used for markov chains
 
+    int genState; //Used for markov chains
     Queue<int> TQ;
     Queue<int> CQ;
-    
 
     public bool running;
     public int scoreVal = 0;
@@ -65,6 +67,7 @@ public class GameController : MonoBehaviour
         running = false;
         print("Destorying Squirrel");
         DestroyImmediate(Squirrel);
+        DestroyImmediate(Overlay);
         DestroyImmediate(terrainObject);
         DestroyImmediate(tlayers);
 
@@ -97,6 +100,10 @@ public class GameController : MonoBehaviour
         T[x][y] = '-';
     }
 
+    public void removeOverlay(){
+        DestroyImmediate(Overlay);
+    }
+
     void Start()
     {
         SetupGame();
@@ -109,6 +116,9 @@ public class GameController : MonoBehaviour
         landSpeed = 0.8f;
         running = false;
 
+        Overlay = Instantiate(OverlayPrefab, new Vector3(0, 0, 0), Quaternion.identity).gameObject;
+        //Overlay.transform.parent = transform;
+
         terrainObject = Instantiate(TerrainPrefab, new Vector3(0, 0, 0), Quaternion.identity).gameObject;
         terrainObject.transform.position = new Vector3(-1 * offset, terrainObject.transform.position.y, 0);
         terrainObject.transform.parent = transform;
@@ -117,7 +127,6 @@ public class GameController : MonoBehaviour
         tlayers.transform.parent = terrainObject.transform;
             
         Squirrel = Instantiate(SquirrelPrefab, new Vector3(3, 3, 0), Quaternion.identity).gameObject;
-        //Squirrel.transform.parent = terrainObject.transform;
         squirrelController = Squirrel.GetComponent<SquirrelController>();
         squirrelController.Controller = gameObject;
 

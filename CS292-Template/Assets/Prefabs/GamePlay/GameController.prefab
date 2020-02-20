@@ -54,6 +54,9 @@ MonoBehaviour:
   SquirrelPrefab: {fileID: 9079002216964490105, guid: b89e186b732b2dc44a66e634cf35fa75,
     type: 3}
   squirrelController: {fileID: 0}
+  Overlay: {fileID: 0}
+  OverlayPrefab: {fileID: 6449736087071390443, guid: bf91c3a02af566e4f941eb948ccb30d1,
+    type: 3}
   offset: 0
   GrassTile: {fileID: 11400000, guid: 21ee9c18177d6ef4b87103539131a6bf, type: 2}
   RoadTile: {fileID: 11400000, guid: 63008592a37b0ad419a1efdbdef1be15, type: 2}

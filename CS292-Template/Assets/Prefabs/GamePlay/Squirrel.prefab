@@ -132,6 +132,8 @@ MonoBehaviour:
   cl: {fileID: 2800000, guid: cdd3f3dc045165d448d7f147968cb5cc, type: 3}
   colInvinTime: 5
   hurtInvinTime: 2
+  OverlayPrefab: {fileID: 6449736087071390443, guid: bf91c3a02af566e4f941eb948ccb30d1,
+    type: 3}
 --- !u!61 &6367345081185034752
 BoxCollider2D:
   m_ObjectHideFlags: 0
