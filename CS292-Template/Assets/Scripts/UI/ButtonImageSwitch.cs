@@ -9,6 +9,7 @@ public class ButtonImageSwitch : MonoBehaviour
     public Sprite SoundOn;
     public Sprite SoundOff;
     public Button but;
+    public GameObject music;
 
     void OnButtonClick()
     {
@@ -19,10 +20,12 @@ public class ButtonImageSwitch : MonoBehaviour
         if (but.GetComponent<Image>().sprite == SoundOn)
         {
             but.GetComponent<Image>().sprite = SoundOff;
+            music.SetActive(false);
         }
         else
         {
             but.GetComponent<Image>().sprite = SoundOn;
+            music.SetActive(true);
         }
     }
 
