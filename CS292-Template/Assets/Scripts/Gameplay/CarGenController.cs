@@ -18,7 +18,8 @@ public class CarGenController : MonoBehaviour
 
     void FixedUpdate()
     {
-        //transform.position += new Vector3(-1 * parent.landSpeed * Time.deltaTime, 0, 0);
+        if(!parent.running) return;
+        
         if(cooldown <= 0){
             CarController tc = Instantiate(carPrefab, transform.position, Quaternion.identity);
             tc.transform.parent = parent.terrainObject.transform;

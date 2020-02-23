@@ -23,7 +23,8 @@ public class PedestrianGenController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        //transform.position += new Vector3(-1 * parent.landSpeed * Time.deltaTime, 0, 0);
+        if(!parent.running) return;
+        
         if(cooldown <= 0){
             PedestrianController tc = Instantiate(pedestrianPrefab, transform.position, Quaternion.identity);
             tc.transform.parent = parent.terrainObject.transform;

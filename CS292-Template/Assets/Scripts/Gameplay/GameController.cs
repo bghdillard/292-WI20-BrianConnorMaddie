@@ -19,6 +19,10 @@ public class GameController : MonoBehaviour
     public GameObject Squirrel;
     public GameObject SquirrelPrefab;
     public SquirrelController squirrelController;
+    AudioSource audioSource;
+
+    public GameObject PauseButton;
+    public GameObject ResumeButton;
 
     public GameObject Overlay;
     public GameObject OverlayPrefab;
@@ -62,6 +66,9 @@ public class GameController : MonoBehaviour
     //X = Lethal?
     int difficulty;
     int nextCollectible;
+
+    public bool musicMuted = false;
+    public bool effectsMuted = false;
     
     public void ResetGame(){ //Maddie - Use this to reset Game
         running = false;
@@ -76,10 +83,14 @@ public class GameController : MonoBehaviour
 
     public void PauseGame(){
         running = false;
+        PauseButton.SetActive(false);
+        ResumeButton.SetActive(true);
     }
 
     public void UnpauseGame(){
         running = true;
+        PauseButton.SetActive(true);
+        ResumeButton.SetActive(false);
     }
 
     public char GetTerrain(int row, int col){ //Brian - Use this for movement
@@ -129,6 +140,9 @@ public class GameController : MonoBehaviour
         running = false;
         runTime = 0;
 
+        audioSource = gameObject.GetComponent<AudioSource>();
+        if(!musicMuted) audioSource.Play();
+
         Overlay = Instantiate(OverlayPrefab, new Vector3(0, 0, 0), Quaternion.identity).gameObject;
         Overlay.transform.parent = transform;
 
@@ -142,7 +156,6 @@ public class GameController : MonoBehaviour
         Squirrel = Instantiate(SquirrelPrefab, new Vector3(3, 3, 0), Quaternion.identity).gameObject;
         squirrelController = Squirrel.GetComponent<SquirrelController>();
         squirrelController.Controller = gameObject;
-
         
         TerrainTileset = tlayers.transform.Find("TerrainGrid/TerrainMap").gameObject;
         ObjectTileset = tlayers.transform.Find("ObjectGrid/ObjectMap").gameObject;
@@ -186,35 +199,36 @@ public class GameController : MonoBehaviour
     void FixedUpdate()
     {
         if(running){
-            //landSpeed += Time.deltaTime / 10;
             landSpeed += ((1 / (float)(front + 50)) * Time.deltaTime); //Acceleration Function integrates to Log
             runTime += Time.deltaTime;
 
             offset += landSpeed * Time.deltaTime;
-            if(difficulty == -1){
-                print("Intro");
-                difficulty = 0;
-            }
-            if(front-13 > 5 && difficulty == 0){
-                print("Easy");
-                TQ.Enqueue(1);
-                CQ.Enqueue(3);
-                difficulty = 1;
-            }
-            if(front-13 > 15 && difficulty == 0){
-                print("Medium");
-                TQ.Enqueue(2);
-                CQ.Enqueue(1);
-                difficulty = 2;
-            }
-            if(front-13 > 40 && difficulty == 1){
-                print("Hard");
-                CQ.Enqueue(2);
-                difficulty = 3;
-            } 
-            if(offset + 29 > front){
-                MakeNewLayer();
-            }
+        }
+
+        if(difficulty == -1){
+            print("Intro");
+            difficulty = 0;
+        }
+        if(front-13 > 5 && difficulty == 0){
+            print("Easy");
+            TQ.Enqueue(1);
+            CQ.Enqueue(3);
+            difficulty = 1;
+        }
+        if(front-13 > 15 && difficulty == 0){
+            print("Medium");
+            TQ.Enqueue(2);
+            CQ.Enqueue(1);
+            difficulty = 2;
+        }
+        if(front-13 > 40 && difficulty == 1){
+            print("Hard");
+            CQ.Enqueue(2);
+            difficulty = 3;
+        } 
+
+        if(offset + 29 > front){
+            MakeNewLayer();
         }
 
         if(Time.time >= nextUpdate && running){
@@ -232,23 +246,19 @@ public class GameController : MonoBehaviour
         }
     }
 
-    
-
-    
-
     void LayerSetup(){
         List<char> L = new List<char>();
         for(int i = 0; i < 7; i += 1){
             L.Add('-');
         }
-        T.Remove(front - 30);
-        B.Remove(front - 30);
+        T.Remove(front - 32);
+        B.Remove(front - 32);
         T.Add(front, L);
 
         for(int i = bot; i < top; i+=1){
-            terrain.SetTile(new Vector3Int(front - 30, i, 0), null);
-            objects.SetTile(new Vector3Int(front - 30, i, 0), null);
-            above.SetTile(new Vector3Int(front - 30, i, 0), null);
+            terrain.SetTile(new Vector3Int(front - 32, i, 0), null);
+            objects.SetTile(new Vector3Int(front - 32, i, 0), null);
+            above.SetTile(new Vector3Int(front - 32, i, 0), null);
         }
     }
 

@@ -6,6 +6,7 @@ public class CarController : MonoBehaviour
 {
     public float speed = 3;
     public int direction = -1;
+    bool running;
 
     public GameObject parentObj;
     public GameController parent;
@@ -28,6 +29,8 @@ public class CarController : MonoBehaviour
         var main = particleSystem.main;
         main.simulationSpace = ParticleSystemSimulationSpace.Custom;
         main.customSimulationSpace = parent.terrainObject.transform;
+
+        running = true;
     }
 
     public void SetFlip()
@@ -40,6 +43,18 @@ public class CarController : MonoBehaviour
 
     void Update()
     {
+        if(parent.running != running){
+            running = parent.running;
+            GameObject smokeTrail = gameObject.transform.Find("SmokeTrail").gameObject;
+            ParticleSystem particleSystem = smokeTrail.GetComponent<ParticleSystem>();
+            if(running){
+                particleSystem.Play();
+            } else {
+                particleSystem.Pause();
+            }
+        }
+        if(!running) return;
+
         transform.position += new Vector3(0, direction * speed * Time.deltaTime, 0);
 
         if(transform.position.x < -1){
@@ -56,7 +71,7 @@ public class CarController : MonoBehaviour
         float dist = Vector3.Distance(squirrel.transform.position, transform.position);
         if(passed == false && dist < 4){
             passed = true;
-            audioSource.Play();
+            if(!parent.effectsMuted) audioSource.Play();
         }
     }
 

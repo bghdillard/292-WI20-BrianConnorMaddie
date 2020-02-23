@@ -6,6 +6,7 @@ public class PedestrianController : MonoBehaviour
 {
     public float speed = 1;
     public int direction = -1;
+    bool running;
 
     public GameObject parentObj;
     public GameController parent;
@@ -21,6 +22,7 @@ public class PedestrianController : MonoBehaviour
         gameObject.GetComponent<SpriteRenderer>().sprite = newSprite;
         audioSource = gameObject.GetComponent<AudioSource>();
         passed = false;
+        running = true;
     }
 
     public void SetFlip()
@@ -35,7 +37,18 @@ public class PedestrianController : MonoBehaviour
 
     void Update()
     {
-        //transform.position += new Vector3(-1 * parent.landSpeed * Time.deltaTime, 0, 0);
+        if(parent.running != running){
+            running = parent.running;
+            GameObject smokeTrail = gameObject.transform.Find("SmokeTrail").gameObject;
+            ParticleSystem particleSystem = smokeTrail.GetComponent<ParticleSystem>();
+            if(running){
+                particleSystem.Stop();
+            } else {
+                particleSystem.Play();
+            }
+        }
+        if(!running) return;
+
         transform.position += new Vector3(0, direction * speed * Time.deltaTime, 0);
 
         if(transform.position.x < -1){

@@ -54,7 +54,7 @@ public class SquirrelController : MonoBehaviour
         top = new Rect(Screen.width / 3, Screen.height * 2 / 3, Screen.width / 3, Screen.height / 3);
         bottom = new Rect(Screen.width / 3, 0, Screen.width / 3, Screen.height / 3);
         left = new Rect(0, 0, Screen.width / 3, Screen.height);
-        right = new Rect(Screen.width * 2 / 3, 0, Screen.width / 3, Screen.height);
+        right = new Rect(Screen.width * 2 / 3, 0, Screen.width / 3, Screen.height * 5 / 6);
 
         invincible = false;
         controls = Texture2D.blackTexture;
@@ -169,9 +169,9 @@ public class SquirrelController : MonoBehaviour
                     if (moveR) anim.SetTrigger("MoveRight");
                     if (moveU) anim.SetTrigger("MoveUp");
                     if (moveD) anim.SetTrigger("MoveDown");
-                    if(GC.running == false) GC.running = true;
+                    if(GC.running == false) GC.UnpauseGame();
                 }else{
-                    audioSource.Play();
+                    if(!GC.effectsMuted) audioSource.Play();
                 }
             }
             
@@ -260,7 +260,7 @@ public class SquirrelController : MonoBehaviour
                 i += 1;
                 if (GC.GetTerrain(row, col + i) == '=' || GC.GetTerrain(row, col + i) == '-') break;
             }
-            if(i == 7){
+            if(i == 14){
                 i = 7;
                 while (true)
                 {
