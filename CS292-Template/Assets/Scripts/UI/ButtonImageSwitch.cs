@@ -26,12 +26,10 @@ public class ButtonImageSwitch : MonoBehaviour
         if (but.GetComponent<Image>().sprite == SoundOn)
         {
             but.GetComponent<Image>().sprite = SoundOff;
-            music.SetActive(false);
         }
         else
         {
             but.GetComponent<Image>().sprite = SoundOn;
-            music.SetActive(true);
         }
     }
 
