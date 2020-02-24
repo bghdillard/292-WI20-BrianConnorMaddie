@@ -211,7 +211,7 @@ public class GameController : MonoBehaviour
 
         if(difficulty == -1){
             print("Intro");
-            TQ.Enqueue(2);
+            //TQ.Enqueue(2);
             difficulty = 0;
         }
         if(front-13 > 5 && difficulty == 0){
