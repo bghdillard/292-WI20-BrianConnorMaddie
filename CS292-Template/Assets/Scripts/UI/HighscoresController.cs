@@ -29,7 +29,7 @@ public class HighscoresController : MonoBehaviour
         string s = "";    
         for(int i = 0; i < 5; i += 1){
             if(i < scores.Count){
-                s += (i+1).ToString() + "\t- " + scores[i] + "\n";
+                s += (i+1).ToString() + "\t- " + scores[i].ToString("#,##0") + "\n";
             } else {
                 s += (i+1).ToString() + "\t- 0\n";
             }
