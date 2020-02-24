@@ -31,7 +31,7 @@ public class PedestrianGenController : MonoBehaviour
             tc.parent = parent;
             tc.direction = direction;
             tc.squirrel = squirrel;
-            tc.SetFlip();
+            //tc.SetFlip();
 
             cooldown = Random.Range(minCooldown, maxCooldown);
         }

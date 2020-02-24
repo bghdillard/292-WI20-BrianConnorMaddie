@@ -36,6 +36,7 @@ public class GameController : MonoBehaviour
     Tilemap above;
     public Tile GrassTile;
     public Tile RoadTile;
+    public Tile SideWalkTile;
     public Tile TrackTile;
     public Tile RockTile;
     public Tile IceTile;
@@ -207,6 +208,7 @@ public class GameController : MonoBehaviour
 
         if(difficulty == -1){
             print("Intro");
+            TQ.Enqueue(2);
             difficulty = 0;
         }
         if(front-13 > 5 && difficulty == 0){
@@ -403,7 +405,7 @@ public class GameController : MonoBehaviour
 
     void MakeSidewalk(int dir){
         for(int i = bot; i < top; i+=1){
-            terrain.SetTile(new Vector3Int(front, i, 0), RoadTile);
+            terrain.SetTile(new Vector3Int(front, i, 0), SideWalkTile);
         }
 
         for(int i = 0; i < 7; i += 1){

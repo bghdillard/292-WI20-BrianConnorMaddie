@@ -31,6 +31,7 @@ public class SquirrelController : MonoBehaviour
     bool canMove;
     bool invincible;
     int totalMoves;
+    bool running;
 
     Rect top;
     Rect bottom;
@@ -59,12 +60,22 @@ public class SquirrelController : MonoBehaviour
         invincible = false;
         controls = Texture2D.blackTexture;
         invinTime = 0.0f;
+        running = false;
 
         print("Making Squirrel");
     }
 
     void Update()
     {
+        if(GC.running != running){
+            running = GC.running;
+            if(running){
+                anim.enabled = true;
+            } else {
+                anim.enabled = false;
+            }
+        }
+
         float step = speed * Time.deltaTime;
 
         bool moveL = false;
@@ -91,7 +102,7 @@ public class SquirrelController : MonoBehaviour
                     SpriteRenderer SR = GetComponent<SpriteRenderer>();
                     SR.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);    
 
-                    triggerInvin(-1);
+                    invincible = false;
                 }
                         
             } else {
@@ -226,15 +237,12 @@ public class SquirrelController : MonoBehaviour
 
     public void triggerInvin(float nextTime) 
     { 
-        invincible = !invincible; 
-        if (invincible) 
-        { 
-            print("Starting Invincibility");
-            SpriteRenderer SR = GetComponent<SpriteRenderer>();
-            SR.color = new Color(1.0f, 1.0f, 1.0f, 0.4f);  
+        invincible = true; 
+        print("Starting Invincibility");
+        SpriteRenderer SR = GetComponent<SpriteRenderer>();
+        SR.color = new Color(1.0f, 1.0f, 1.0f, 0.4f);  
 
-            invinTime = nextTime; 
-        } 
+        invinTime = nextTime; 
     } 
 
     public void ChangeHealth(int change)
