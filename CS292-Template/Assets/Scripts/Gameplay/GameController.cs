@@ -71,6 +71,7 @@ public class GameController : MonoBehaviour
     public bool musicMuted = false;
     public bool effectsMuted = false;
     public GameObject pauseMenu;
+    bool paused;
 
     public void ResetGame(){ //Maddie - Use this to reset Game
         running = false;
@@ -81,6 +82,9 @@ public class GameController : MonoBehaviour
         DestroyImmediate(tlayers);
 
         SetupGame();
+        if (paused == true) {
+            UnpauseGame();
+        }
     }
 
     public void PauseGame(){
@@ -88,6 +92,7 @@ public class GameController : MonoBehaviour
         PauseButton.SetActive(false);
         pauseMenu.SetActive(true);
         ResumeButton.SetActive(true);
+        paused = true;
     }
 
     public void UnpauseGame(){
@@ -95,6 +100,7 @@ public class GameController : MonoBehaviour
         PauseButton.SetActive(true);
         pauseMenu.SetActive(false);
         ResumeButton.SetActive(false);
+        paused = false;
     }
 
     public char GetTerrain(int row, int col){ //Brian - Use this for movement

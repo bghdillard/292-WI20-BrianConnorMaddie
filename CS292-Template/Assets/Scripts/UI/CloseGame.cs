@@ -8,7 +8,7 @@ public class CloseGame : MonoBehaviour
     public void CloseApplication()
     {
         Application.Quit();
-        UnityEditor.EditorApplication.isPlaying = false;
+        //UnityEditor.EditorApplication.isPlaying = false;
     }
 
 
