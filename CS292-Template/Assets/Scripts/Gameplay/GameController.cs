@@ -73,6 +73,11 @@ public class GameController : MonoBehaviour
     public GameObject pauseMenu;
     bool paused;
 
+    public bool moveL;
+    public bool moveR;
+    public bool moveU;
+    public bool moveD;
+
     public void ResetGame(){ //Maddie - Use this to reset Game
         running = false;
         print("Destorying Squirrel");
@@ -136,6 +141,31 @@ public class GameController : MonoBehaviour
         DL.SaveFile();
     }
 
+    public void MoveUp(){
+        moveL = false;
+        moveR = false;
+        moveU = true;
+        moveD = false;
+    }
+    public void MoveDown(){
+        moveL = false;
+        moveR = false;
+        moveU = false;
+        moveD = true;
+    }
+    public void MoveRight(){
+        moveL = false;
+        moveR = true;
+        moveU = false;
+        moveD = false;
+    }
+    public void MoveLeft(){
+        moveL = true;
+        moveR = false;
+        moveU = false;
+        moveD = false;
+    }
+
 
     void Start()
     {
@@ -153,8 +183,8 @@ public class GameController : MonoBehaviour
         audioSource = gameObject.GetComponent<AudioSource>();
         if(!musicMuted) audioSource.Play();
 
-        Overlay = Instantiate(OverlayPrefab, new Vector3(0, 0, 0), Quaternion.identity).gameObject;
-        Overlay.transform.parent = transform;
+        //Overlay = Instantiate(OverlayPrefab, new Vector3(0, 0, 0), Quaternion.identity).gameObject;
+        //Overlay.transform.parent = transform;
 
         terrainObject = Instantiate(TerrainPrefab, new Vector3(0, 0, 0), Quaternion.identity).gameObject;
         terrainObject.transform.position = new Vector3(-1 * offset, terrainObject.transform.position.y, 0);
@@ -199,6 +229,12 @@ public class GameController : MonoBehaviour
         genState = rc(new int[]{1, 2, 3});
         TQ = new Queue<int>();
         CQ = new Queue<int>();
+
+        moveL = false;
+        moveR = false;
+        moveU = false;
+        moveD = false;
+        terrainObject.transform.position = new Vector3(-1 * offset - 0.5f, terrainObject.transform.position.y, 0);
     }
 
     void Update(){
@@ -213,6 +249,8 @@ public class GameController : MonoBehaviour
             runTime += Time.deltaTime;
 
             offset += landSpeed * Time.deltaTime;
+
+            
         }
 
         if(difficulty == -1){
@@ -243,11 +281,9 @@ public class GameController : MonoBehaviour
         }
 
         if(Time.time >= nextUpdate && running){
-             nextUpdate=Mathf.FloorToInt(Time.time)+1;
-             UpdateEverySecond();
+            nextUpdate=Mathf.FloorToInt(Time.time)+1;
+            UpdateEverySecond();
         }
-
-        
     }
 
     private int nextUpdate=1;

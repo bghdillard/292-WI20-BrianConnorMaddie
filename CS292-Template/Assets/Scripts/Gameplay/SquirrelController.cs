@@ -105,34 +105,46 @@ public class SquirrelController : MonoBehaviour
                     invincible = false;
                 }
                         
-            } else {
-                
             }
 
             
+
             int newRow = row;
             int newCol = col;
             if (canMove)
             {
-                if ((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) || Input.GetMouseButtonDown(0))
-                {
-                    Vector2 touchPos = new Vector2(-100, -100);
-                    if(Input.touchCount > 0) {
-                        touchPos = Input.GetTouch(0).position;
-                    } else {
-                        touchPos = Input.mousePosition;
-                    }
+                int moveMode = 0;
+                if(moveMode == 0){
+                    if ((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) || Input.GetMouseButtonDown(0))
+                    {
+                        Vector2 touchPos = new Vector2(-100, -100);
+                        if(Input.touchCount > 0) {
+                            touchPos = Input.GetTouch(0).position;
+                        } else {
+                            touchPos = Input.mousePosition;
+                        }
 
-                    if (left.Contains(touchPos)) moveL = true;
-                    if (right.Contains(touchPos)) moveR = true;
-                    if (top.Contains(touchPos)) moveU = true;
-                    if (bottom.Contains(touchPos)) moveD = true;
+                        if (left.Contains(touchPos)) moveL = true;
+                        if (right.Contains(touchPos)) moveR = true;
+                        if (top.Contains(touchPos)) moveU = true;
+                        if (bottom.Contains(touchPos)) moveD = true;
+                    }else{
+                        if (Input.GetKeyDown(KeyCode.A)) moveL = true;
+                        if (Input.GetKeyDown(KeyCode.D)) moveR = true;
+                        if (Input.GetKeyDown(KeyCode.W)) moveU = true;
+                        if (Input.GetKeyDown(KeyCode.S)) moveD = true;
+                    }   
                 }else{
-                    if (Input.GetKeyDown(KeyCode.A)) moveL = true;
-                    if (Input.GetKeyDown(KeyCode.D)) moveR = true;
-                    if (Input.GetKeyDown(KeyCode.W)) moveU = true;
-                    if (Input.GetKeyDown(KeyCode.S)) moveD = true;
-                }   
+                    moveL = GC.moveL;
+                    moveR = GC.moveR;
+                    moveU = GC.moveU;
+                    moveD = GC.moveD;
+
+                    GC.moveL = false;
+                    GC.moveR = false;
+                    GC.moveU = false;
+                    GC.moveD = false;
+                }
             }
 
             if (moveL) newCol--;

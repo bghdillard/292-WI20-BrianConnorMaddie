@@ -22,8 +22,10 @@ public class HammerController : MonoBehaviour
         
         hammers = squirrel.hammers;
 
-        if (hammers < 3) hammer3.SetActive(false); else hammer3.SetActive(true);
-        if (hammers < 2) hammer2.SetActive(false); else hammer2.SetActive(true);
-        if (hammers < 1) hammer1.SetActive(false); else hammer1.SetActive(true);
+        hammer1.GetComponent<Animator>().SetBool("There", hammers > 0);
+        hammer2.GetComponent<Animator>().SetBool("There", hammers > 1);
+        hammer3.GetComponent<Animator>().SetBool("There", hammers > 2);
+
+        
     }
 }

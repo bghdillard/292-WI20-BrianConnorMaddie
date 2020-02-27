@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 269bcc7ccb8096b47924cf7eddf0c503, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  speed: 2.5
   direction: -1
   parentObj: {fileID: 0}
   parent: {fileID: 0}
