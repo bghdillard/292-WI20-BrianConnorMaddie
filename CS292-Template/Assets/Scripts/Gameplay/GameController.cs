@@ -19,7 +19,7 @@ public class GameController : MonoBehaviour
     public GameObject Squirrel;
     public GameObject SquirrelPrefab;
     public SquirrelController squirrelController;
-    AudioSource audioSource;
+    public AudioSource audioSource;
 
     public GameObject PauseButton;
     public GameObject ResumeButton;
@@ -72,6 +72,7 @@ public class GameController : MonoBehaviour
     public bool effectsMuted = false;
     public GameObject pauseMenu;
     bool paused;
+
 
     public void ResetGame(){ //Maddie - Use this to reset Game
         running = false;

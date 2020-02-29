@@ -11,12 +11,7 @@ public class ButtonImageSwitch : MonoBehaviour
     public Button but;
     public bool music;
     public GameController GC;
-    public bool musicBool;
-
-    void Start()
-    {
-        musicBool = true;
-    }
+    public MenuMusic mm;
 
     void OnButtonClick()
     {
@@ -33,12 +28,12 @@ public class ButtonImageSwitch : MonoBehaviour
         if (but.GetComponent<Image>().sprite == SoundOn)
         {
             but.GetComponent<Image>().sprite = SoundOff;
-            musicBool = false;
+            mm.music.mute = true;
         }
         else
         {
             but.GetComponent<Image>().sprite = SoundOn;
-            musicBool = true;
+            mm.music.mute = false;
         }
     }
 

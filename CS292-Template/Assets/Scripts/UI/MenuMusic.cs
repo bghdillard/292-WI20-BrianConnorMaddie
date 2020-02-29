@@ -9,19 +9,15 @@ public class MenuMusic : MonoBehaviour
     public AudioSource music;
     public ButtonImageSwitch button;
 
+    
 
     void Start()
     {
         music.Play();
+        music.mute = false;
+        music.loop = true;
+        
     }
 
-    void Update()
-    {
-        if (button.musicBool == true) {
-            music.mute = false;
-        }
-        if (button.musicBool == false) {
-            music.mute = true;
-        }
-    }
+
 }
