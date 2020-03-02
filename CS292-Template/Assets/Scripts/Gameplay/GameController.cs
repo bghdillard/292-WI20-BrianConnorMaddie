@@ -19,7 +19,7 @@ public class GameController : MonoBehaviour
     public GameObject Squirrel;
     public GameObject SquirrelPrefab;
     public SquirrelController squirrelController;
-    AudioSource audioSource;
+    public AudioSource audioSource;
 
     public GameObject PauseButton;
     public GameObject ResumeButton;
