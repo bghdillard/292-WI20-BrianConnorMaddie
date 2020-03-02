@@ -113,7 +113,7 @@ public class SquirrelController : MonoBehaviour
             int newCol = col;
             if (canMove)
             {
-                int moveMode = 0;
+                int moveMode = 1;
                 if(moveMode == 0){
                     if ((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) || Input.GetMouseButtonDown(0))
                     {
