@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class FrisbeeController : MonoBehaviour
 {
+    public Vector2 p1;
+    public Vector2 p2; 
     // Start is called before the first frame update
     void Start()
     {
